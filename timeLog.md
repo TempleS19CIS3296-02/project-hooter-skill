@@ -1,16 +1,17 @@
+# Time Log for Hooter Skill Project
 
-# Group
+### Group
   - 6:00 initial planning
   
   
-# Viet Pham
+### Viet Pham
 
 
-# Myra Mirza
+### Myra Mirza
 
 
-# Sean Reddington
+### Sean Reddington
 
 
-# Richard Kemmerer
+### Richard Kemmerer
 
