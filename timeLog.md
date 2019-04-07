@@ -11,7 +11,7 @@
 
 
 ### Sean Reddington
-
+  - 3:30 project structure refactoring and debugging
 
 ### Richard Kemmerer
 
