@@ -1,5 +1,6 @@
 "use strict";
 const axios = require("axios");
+
 const hoursLookUpHandler = {
   "HoursLookUpIntent": function () {
     var speechOutput = "";
