@@ -11,7 +11,7 @@ exports.getAccessToken = function () {
     const fs = require("fs");
     var AUTH_TOKEN = "";
     try {
-        AUTH_TOKEN = fs.readFileSync("./bearerToken.txt", "utf8").toString();
+        AUTH_TOKEN = fs.readFileSync("./canvasUtils/bearerToken.txt", "utf8").toString();
         console.log(AUTH_TOKEN);
     } catch (e) {
         console.log("Error:", e.stack);

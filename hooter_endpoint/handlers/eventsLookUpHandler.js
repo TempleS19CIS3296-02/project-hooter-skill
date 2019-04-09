@@ -1,6 +1,6 @@
 var { google } = require('googleapis')
 var scopes = ['https://www.googleapis.com/auth/calendar.readonly']
-var key = require('./HooterSkill-5fde0850cf41.json'); // private json
+var key = require('../HooterSkill-5fde0850cf41.json'); // private json
 var jwtClient = new google.auth.JWT(key.client_email, null, key.private_key, scopes, null);
 
 const eventsLookUpHandler = {

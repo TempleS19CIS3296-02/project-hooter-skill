@@ -5,7 +5,6 @@ const getCourses = require("../canvasUtils/getCourses.js");
 
 const canvasToDoHandler = {
     "CanvasToDoIntent": function () {
-        let speechOutput = "";
 
         // Read manually generated access token from local file
         const AUTH_TOKEN = getAccessToken.getAccessToken();
