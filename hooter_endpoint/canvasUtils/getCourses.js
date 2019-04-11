@@ -1,13 +1,13 @@
 const axios = require("axios");
 
-exports.getCourses = async function (AUTH_TOKEN) {
+exports.getCourses = function (AUTH_TOKEN) {
     // async function getCourses(AUTH_TOKEN) {
 
     let response = ""; //http response
     let courseMap = new Map();
     try {
         // Make the request for the authorized user's to do list
-        response = await axios({
+        response = axios({
             method: "get",
             url: "https://templeu.instructure.com/api/v1/users/self/courses?per_page=100",
             // url: "https://templeu.instructure.com/api/v1/courses",

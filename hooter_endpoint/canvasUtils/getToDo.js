@@ -13,13 +13,13 @@ const moment = require("moment");
 // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 // axios.defaults.headers.common = { Authorization: `bearer ${AUTH_TOKEN}` };
 
-exports.getToDo = async function (AUTH_TOKEN, map) {
+exports.getToDo = function (AUTH_TOKEN, map) {
   // const url = "https://templeu.instructure.com/api/v1/users/self/todo"; //Canvas API url
   let response = ""; //http response
   // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
   try {
     // Make the request for the authorized user's to do list
-    response = await axios({
+    response = axios({
       method: "get",
       url: "https://templeu.instructure.com/api/v1/users/self/todo?per_page=20",
       // url: "/users/self/todo",
