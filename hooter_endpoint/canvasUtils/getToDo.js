@@ -55,12 +55,17 @@ function getToDoListItem(item, course_name) {
 
   let dueDate = item.assignment.due_at;
   dueDate = moment(item.assignment.due_at).format('MMMM Do [at] hh:mm A');
-  // dueDate = moment(item.assignment.due_at).toLocaleString('MMMM D @ hh:mm A');
-  var str =
-    "\n" + course_name + ": " +
+
+  // var str =
+  //   "\n" + course_name + ": " +
+  //   item.assignment.name +
+  //   "\n\tdue date: " +
+  //   dueDate;
+
+  var str = course_name + ": " +
     item.assignment.name +
-    "\n\tdue date: " +
-    dueDate;
+    "due date: " + dueDate + " ";
+
 
   return str;
 }
