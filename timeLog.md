@@ -15,4 +15,4 @@
 
 ### Richard Kemmerer
   - 2:00 on building information and JSON/DynamoDB code & utterances
-  - 3:00 on more building information and more DynamoDB/utterances
+  - 4:30 on more building information and more DynamoDB/utterances and powerpoint and trello
