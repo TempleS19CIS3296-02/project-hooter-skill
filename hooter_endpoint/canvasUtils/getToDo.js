@@ -19,7 +19,7 @@ exports.getToDo = function (AUTH_TOKEN, map) {
   // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
   try {
     // Make the request for the authorized user's to do list
-    response = axios({
+    return response = axios({
       method: "get",
       url: "https://templeu.instructure.com/api/v1/users/self/todo?per_page=20",
       // url: "/users/self/todo",
@@ -56,15 +56,17 @@ function getToDoListItem(item, course_name) {
   let dueDate = item.assignment.due_at;
   dueDate = moment(item.assignment.due_at).format('MMMM Do [at] hh:mm A');
 
-  // var str =
-  //   "\n" + course_name + ": " +
-  //   item.assignment.name +
-  //   "\n\tdue date: " +
-  //   dueDate;
-
-  var str = course_name + ": " +
+  //format for console testing
+  var str =
+    "\n" + course_name + ": " +
     item.assignment.name +
-    "due date: " + dueDate + " ";
+    "\n\tdue date: " +
+    dueDate;
+
+  // //format for Alexa output
+  // var str = course_name + ": " +
+  //   item.assignment.name +
+  //   " due date: " + dueDate + " ";
 
 
   return str;
