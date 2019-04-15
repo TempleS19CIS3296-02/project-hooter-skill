@@ -46,27 +46,31 @@ function buildTodoListSpeech(toDoList, map) {
   toDoList.sort(compareDate);
   var speechText = "Your Canvas to do list is: ";
   for (let i = 0; i < toDoList.length; i++) {
-    speechText += getToDoListItem(toDoList[i], map.get(toDoList[i].course_id));
+    speechText += ("\n\t" + getToDoListItem(toDoList[i], map.get(toDoList[i].course_id)));
   }
+
+  speechText = speechText.replace("&", "and");
+
   return speechText;
 }
 
 function getToDoListItem(item, course_name) {
 
   let dueDate = item.assignment.due_at;
+  let assignment = item.assignment.name;
   dueDate = moment(item.assignment.due_at).format('MMMM Do [at] hh:mm A');
 
-  //format for console testing
-  var str =
-    "\n" + course_name + ": " +
-    item.assignment.name +
-    "\n\tdue date: " +
-    dueDate;
-
-  // //format for Alexa output
-  // var str = course_name + ": " +
+  // //format for console testing
+  // var str =
+  //   "\n" + course_name + ": " +
   //   item.assignment.name +
-  //   " due date: " + dueDate + " ";
+  //   "\n\tdue date: " +
+  //   dueDate;
+
+  //format for Alexa output
+  var str = course_name + ": " +
+    assignment +
+    " due date: " + dueDate + ". ";
 
 
   return str;

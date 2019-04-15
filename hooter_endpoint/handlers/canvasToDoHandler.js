@@ -8,7 +8,6 @@ const canvasToDoHandler = {
     "CanvasToDoIntent": async function () {
         var speechOutput = "";
         const alexa = this;
-        speechOutput = "hello world!";
 
         try {
             // Read manually generated access token from local file
@@ -38,8 +37,8 @@ const canvasToDoHandler = {
         }
 
 
-        // this.emit(":tell", speechOutput);
-        console.log(speechOutput);
+        this.emit(":tell", speechOutput);
+        // console.log(speechOutput);
     } //end CanvasToDoIntent()
 } // end canvasToDoHandler
 

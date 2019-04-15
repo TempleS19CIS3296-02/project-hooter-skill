@@ -18,7 +18,7 @@ const distanceLookUpHandler = require("./handlers/distanceLookUpHandler.js");
 const eventsLookUpHandler = require("./handlers/eventsLookUpHandler.js");
 const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
 
-canvasToDoHandler.CanvasToDoIntent();
+// canvasToDoHandler.CanvasToDoIntent();
 
 exports.handler = function (event, context, callback) {
   const alexa = Alexa.handler(event, context, callback);
