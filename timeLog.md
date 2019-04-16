@@ -12,6 +12,9 @@
 
 ### Sean Reddington
   - 3:30 project structure refactoring and debugging
+  - 4:00 building custom getCourses() & getToDoList() Canvas API calls + various research
+  - 2:00 Integrating getToDoList() with Alexa skill intent/handlers
+  - 1:00 Canvas intent debugging
 
 ### Richard Kemmerer
   - 2:00 on building information and JSON/DynamoDB code & utterances
