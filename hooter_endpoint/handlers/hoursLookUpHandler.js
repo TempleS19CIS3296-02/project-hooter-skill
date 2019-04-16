@@ -1,6 +1,6 @@
 "use strict";
 const getBuilding = require("../buildingGet/getBuilding.js");
-
+const reprompt = "What can I help you with?";
 const hoursLookUpHandler = {
   HoursLookUpIntent: async function() {
     var speechOutput = "";
@@ -68,8 +68,8 @@ const hoursLookUpHandler = {
     } else {
       speechOutput = "Error. Please try again";
     } //else error
-    this.emit(":tell", speechOutput);
-    this.emit("");
+    this.response.speak(speechOutput).listen(reprompt);
+    this.emit(":responseReady");
   }
 };
 
