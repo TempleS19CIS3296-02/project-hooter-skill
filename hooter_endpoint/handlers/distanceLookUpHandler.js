@@ -2,6 +2,7 @@
 const Alexa = require("alexa-sdk");
 const axios = require("axios");
 const GOOGLE_API_KEY = "AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
+const reprompt = "What can I help you?";
 
 const distanceLookUpHandler = {
   DistanceLookUpIntent: async function() {
@@ -69,7 +70,8 @@ const distanceLookUpHandler = {
                   speechOutput += res.data.rows[0].elements[0].duration.text;
                   speechOutput +=
                     " to get from " + userOrigin + " to " + userDest;
-                  this.emit(":tell", speechOutput);
+                  this.response.speak(speechOutput).listen(reprompt);
+                  this.emit(":responseReady");
                 })
                 .catch(err => {
                   console.log(err); //Axios entire error message
@@ -177,7 +179,8 @@ const distanceLookUpHandler = {
                           res.data.rows[0].elements[0].duration.text;
                         speechOutput +=
                           " to get to " + userDest + " from " + userOriginAdd;
-                        this.emit(":tell", speechOutput);
+                        this.response.speak(speechOutput).listen(reprompt);
+                        this.emit(":responseReady");
                       })
                       .catch(err => {
                         console.log(err); //Axios entire error message
@@ -218,9 +221,11 @@ const distanceLookUpHandler = {
                 data.addressLine2 == null &&
                 data.addressLine3 == null
               ) {
-                this.response.speak(
-                  "I'm sorry. There is no street address listed for your device."
-                );
+                this.response
+                  .speak(
+                    "I'm sorry. There is no street address listed for your device."
+                  )
+                  .listen(reprompt);
                 this.emit(":responseReady");
               } else if (
                 data.addressLine2 == null &&
@@ -299,7 +304,8 @@ const distanceLookUpHandler = {
                         res.data.rows[0].elements[0].duration.text;
                       speechOutput +=
                         " to get to " + userDest + " from " + userOriginAdd;
-                      this.emit(":tell", speechOutput);
+                      this.response.speak(speechOutput).listen(reprompt);
+                      this.emit(":responseReady");
                     })
                     .catch(err => {
                       console.log(err); //Axios entire error message
@@ -312,7 +318,9 @@ const distanceLookUpHandler = {
                 });
             })
             .catch(error => {
-              this.response.speak("I'm sorry. Something went wrong.");
+              this.response
+                .speak("I'm sorry. Something went wrong.")
+                .listen(reprompt);
               this.emit(":responseReady");
               console.log(error.message);
             });
