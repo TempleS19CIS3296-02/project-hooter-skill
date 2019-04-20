@@ -8,16 +8,33 @@ const GOOGLE_API_KEY = "AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
 const USER_MODE = "walking";
 const USER_LANG = "en-EN";
 
+//Function to get building address from building data retrieved from database
+function getBuildingAddress(userData, userDest){
+    var userDestAdd = ""
+    if (userData.Count > 0){
+        userDestAdd = userData.Items[0].address;
+    } else { //Building not in database
+        speechOutput = "I\'m sorry, I can't find " + userDest + ". Please try again";
+        this.emit(":tell", speechOutput);
+    }
+    return userDestAdd;
+}
 //Function to call Google Distance Matrix API to calculate distance between origin and destination
 function getDistance(userOriginAdd, userDestAdd) {
     var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&destinations=" + userDestAdd + "&mode=" + USER_MODE + "&language=" + USER_LANG + "&key=" + GOOGLE_API_KEY;
     return axios.get(distanceApiUrl).then(res => res.data);  
 }
-
 //Function to call Google Geocoding API to get current user location from geocoordinates
 function getAddressFromGeoCoord(userLat, userLong) {
     var geocodingApiUrl = GOOGLE_GEOCODING_API + userLat + "," + userLong + "&key=" + GOOGLE_API_KEY;  
     return axios.get(geocodingApiUrl).then(res => res.data);  
+}
+//Function to collect distance data retrieved from Google Distance Matrix API and format that data for fluent speech output
+function collectAndFormatDistance(distanceData, userOrigin, userDest){
+    var speechOutput = " It will take ";
+    speechOutput += distanceData.rows[0].elements[0].duration.text;
+    speechOutput += " to get to " + userDest + " from " + userOrigin;
+    return speechOutput;
 }
 
 const distanceLookUpHandler = {
@@ -30,33 +47,18 @@ const distanceLookUpHandler = {
         } else { //User has specified a destination
             //Get user destination building name
             var userDest = this.event.request.intent.slots.destbuildingname.value.toLowerCase();
-            //Retrieve address for user dest
-            var userDestAdd = "";
+            //Retrieve address for user dest building
             var destData = await getBuilding.getBuilding(userDest);
-            if (destData.Count > 0){
-                userDestAdd = destData.Items[0].address;
-            } else { //Building not in database
-                speechOutput = "I\'m sorry, I can't find " + userDest + ". Please try again";
-                this.emit(":tell", speechOutput);
-            }
+            var userDestAdd = getBuildingAddress(destData, userDest);
             //If user specifies origin building
             if (this.event.request.intent.slots.originbuildingname.value){
                 //Get user origin building name
                 var userOrigin = this.event.request.intent.slots.originbuildingname.value.toLowerCase();
-                //Retrieve address for user origin
-                var userOriginAdd = "";
+                //Retrieve address for user origin building
                 var origData = await getBuilding.getBuilding(userOrigin);
-                if (origData.Count > 0){
-                    var userOriginAdd = origData.Items[0].address;
-                } else { //Building not in database
-                    speechOutput = "I\'m sorry, I can't find " + userDest + ". Please try again";
-                    this.emit(":tell", speechOutput);
-                }
-                speechOutput += " It will take ";
-                //Get time it will take to get from user origin to user destination
+                var userOriginAdd = getBuildingAddress(origData, userOrigin);
                 var distanceData = await getDistance(userOriginAdd, userDestAdd);
-                speechOutput += distanceData.rows[0].elements[0].duration.text;
-                speechOutput += " to get to " + userDest + " from " + userOrigin;
+                speechOutput += collectAndFormatDistance(distanceData, userOrigin, userDest);
                 this.emit(":tell", speechOutput);
             } else {
             //User has not specified origin, use user location as origin
@@ -82,11 +84,8 @@ const distanceLookUpHandler = {
                             //Get user address from user latitude and longitude
                             var geoAddressData = await getAddressFromGeoCoord(userLat, userLong);
                             var userOriginAdd = geoAddressData.results[0].formatted_address;
-                            speechOutput += " It will take ";
-                            //Get time it will take to get from user origin to user destination
                             var distanceData = await getDistance(userOriginAdd, userDestAdd);
-                            speechOutput += distanceData.rows[0].elements[0].duration.text;
-                            speechOutput += " to get to " + userDest + " from " + userOriginAdd;
+                            speechOutput += collectAndFormatDistance(distanceData, userOriginAdd, userDest);
                             this.emit(":tell", speechOutput);
                         }
                     }

@@ -18,13 +18,27 @@ String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
-
 //Function to call Google Geocoding API to get current user location from geocoordinates
 function getAddressFromGeoCoord(userLat, userLong) {
-    var geocodingApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + userLat + "," + userLong + "&key=" + GOOGLE_API_KEY;;    
+    var geocodingApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + userLat + "," + userLong + "&key=" + GOOGLE_API_KEY; 
     return axios.get(geocodingApiUrl).then(res => res.data);  
 }
-
+//Function to get building address from building data retrieved from database
+function getBuildingAddress(userData, userDest){
+    var userDestAdd = ""
+    if (userData.Count > 0){
+        userDestAdd = userData.Items[0].address;
+    } else { //Building not in database
+        speechOutput = "I\'m sorry, I can't find " + userDest + ". Please try again";
+        this.emit(":tell", speechOutput);
+    }
+    return userDestAdd;
+}
+//Function to call Google Directions API for directions from user origin to user destination
+function getDirections(userOriginAdd, userDestAdd){
+    var directionsApiUrl = GOOGLE_DIRECTIONS_API + "origin=" + userOriginAdd + "&destination=" + userDestAdd + "&mode=" + USER_MODE + "&key=" + GOOGLE_API_KEY;
+    return axios.get(directionsApiUrl).then(res => res.data); 
+}
 //Function to fix grammar of directions speech output
 function fixDirectionInstructionsGrammar(speechOutput){
     speechOutput = speechOutput.replaceAll("Destination", " and destination");
@@ -33,11 +47,42 @@ function fixDirectionInstructionsGrammar(speechOutput){
     speechOutput = speechOutput.replaceAll(SEARCH_MI, REPLACE_MI);
     return speechOutput;
 }
+//Function to get directions steps from directions data retrieved from Google Directions API and format those instructions for fluent speech output
+function collectAndFormatDirections(directionsData){
+    var speechOutput = "";
+    var htmlString = directionsData.routes[0].legs[0].steps[0].html_instructions;
+    speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
+    speechOutput += " for ";
+    speechOutput += directionsData.routes[0].legs[0].steps[0].distance.text;
+    speechOutput += ".";
+    //Run from second until penultimate step so we can keep adding filler words between each direction instruction
+    var i = 1;
+    for(i = 1; i < directionsData.routes[0].legs[0].steps.length-1; i++){
+        speechOutput += " Then ";
+        var htmlString = directionsData.routes[0].legs[0].steps[i].html_instructions;
+        speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
+        //If next direction instruction is 0 miles away, no need to tell user to "continue on" for 0 miles in the current instruction
+        if (directionsData.routes[0].legs[0].steps[i].distance.text != 0){
+        speechOutput += " and continue on for ";
+        speechOutput += directionsData.routes[0].legs[0].steps[i].distance.text;
+        speechOutput += "."
+        }
+    }
+    //Last step does not have "continue on"
+    speechOutput += " Then ";
+    var htmlString = directionsData.routes[0].legs[0].steps[i].html_instructions;
+    speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
+    speechOutput += " in ";
+    speechOutput += directionsData.routes[0].legs[0].steps[i].distance.text;
+    speechOutput += ".";
+    //Fix speech output grammar
+    speechOutput = fixDirectionInstructionsGrammar(speechOutput);
+    return speechOutput;
+}
 
 const directionsLookUpHandler = {
     "DirectionsLookUpIntent": async function () {
         var speechOutput = "";
-
         //If user did not specify a destination
         if(!this.event.request.intent.slots.destbuildingname.value){
             speechOutput = "I\'m sorry, I didn't hear your destination. Please try again and specify a destination.";
@@ -45,84 +90,20 @@ const directionsLookUpHandler = {
         } else { //User has specified a destination
             //Get user destination building name
             var userDest = this.event.request.intent.slots.destbuildingname.value.toLowerCase();
-            //Retrieve address for user dest
-            var userDestAdd = "";
+            //Retrieve address for user dest building
             var destData = await getBuilding.getBuilding(userDest);
-            if (destData.Count > 0){
-                userDestAdd = destData.Items[0].address;
-            } else { //Building not in database
-                speechOutput = "I\'m sorry, I can't find " + userDest + ". Please try again";
-                this.emit(":tell", speechOutput);
-            }
-
+            var userDestAdd = getBuildingAddress(destData, userDest);
             //If user specifies origin building
             if (this.event.request.intent.slots.originbuildingname.value){
                 //Get user origin building name
                 var userOrigin = this.event.request.intent.slots.originbuildingname.value.toLowerCase();
-                //Retrieve address for user origin
-                var userOriginAdd = "";
+                //Retrieve address for user origin building
                 var origData = await getBuilding.getBuilding(userOrigin);
-                if (origData.Count > 0){
-                    userOriginAdd = origData.Items[0].address;
-                } else { //Building not in database
-                    speechOutput = "I\'m sorry, I can't find " + userDest + ". Please try again";
-                    this.emit(":tell", speechOutput);
-                }
-
-                // Call directions API to get directions from origin to destination
-
-                //Create variable URL
-                var directionsApiUrl = GOOGLE_DIRECTIONS_API + "origin=" + userOriginAdd + "&destination="
-var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&destinations=" + userDestAdd + "&" + "mode=" + USER_MODE + "&" + "language=" + USER_LANG + "&" + "key=" + GOOGLE_API_KEY;
-                //Call Directions API with function
-
-                //Get and format directions data within a function
-
-
-
-                //Create url for Google Directions api
-                //var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&" + "destinations=" + userDestAdd + "&" + "mode=" + USER_MODE + "&" + "language=" + USER_LANG + "&" + "key=" + GOOGLE_API_KEY;
-                var directionsApiUrl = "https://maps.googleapis.com/maps/api/directions/json?origin=1100%20W%20Montgomery%20Ave,%20Philadelphia,%20PA%2019122&destination=2109%20N%20Broad%20St,%20Philadelphia,%20PA%2019122&mode=walking&key=AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
-                //Get time it will take to get from origin to destination
-                axios.get(directionsApiUrl)
-                .then(res => {
-                    //head to w mont
-                    var htmlString = res.data.routes[0].legs[0].steps[0].html_instructions;
-                    speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
-                    speechOutput += " for ";
-                    speechOutput += res.data.routes[0].legs[0].steps[0].distance.text;
-                    speechOutput += ".";
-                    //Run from second until penultimate step so we can keep adding a space and the word "then" after each direction instruction
-                    var i = 1;
-                    for(i = 1; i < res.data.routes[0].legs[0].steps.length-1; i++){
-                        speechOutput += " Then ";
-                        var htmlString = res.data.routes[0].legs[0].steps[i].html_instructions;
-                        speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
-                        if (res.data.routes[0].legs[0].steps[i].distance.text != 0){
-                        speechOutput += " and continue on for ";
-                        speechOutput += res.data.routes[0].legs[0].steps[i].distance.text;
-                        speechOutput += "."
-                        }
-                    }
-                    //Last step does not have word "next at end of it"
-                    speechOutput += " Then ";
-                    var htmlString = res.data.routes[0].legs[0].steps[i].html_instructions;
-                    speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
-                    speechOutput += " in ";
-                    speechOutput += res.data.routes[0].legs[0].steps[i].distance.text;
-                    speechOutput += ".";
-
-                    speechOutput = fixDirectionInstructionsGrammar(speechOutput);
-
-                    //Final step is added to speech output and does not contain the word "then" at the end
-                    this.emit(":tell", speechOutput);
-                })
-                .catch(err => {
-                    speechOutput += "I\'m sorry, there was an error. Please try again. ";
-                    speechOutput += err + " "; //Axios entire error message
-                    speechOutput += err.response.data.error; //Google API error message
-                    this.emit(":tell", speechOutput);
-                });
+                var userOriginAdd = getBuildingAddress(origData, userOrigin);
+                //Call Google Directions API for directions from user origin to user destination
+                var directionsData = await getDirections(userOriginAdd, userDestAdd);
+                speechOutput += collectAndFormatDirections(directionsData);
+                this.emit(":tell", speechOutput);
             } else {
             //User has not specified origin, use user location as origin
             //Case 1: User device can share location
