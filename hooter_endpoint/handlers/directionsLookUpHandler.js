@@ -2,7 +2,7 @@
 const getBuilding = require("../buildingGet/getBuilding.js");
 const Alexa = require("alexa-sdk")
 const axios = require("axios");
-const GOOGLE_DISTANCE_MATRIX_API = "https://maps.googleapis.com/maps/api/distancematrix/json?";
+const GOOGLE_DIRECTIONS_API = "https://maps.googleapis.com/maps/api/directions/json?";
 const GOOGLE_API_KEY = "AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
 const USER_MODE = "walking";
 const USER_LANG = "en-EN";
@@ -19,16 +19,19 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-//Function to call Google Distance Matrix API to calculate distance between origin and destination
-function getDistance(userOriginAdd, userDestAdd) {
-    var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&" + "destinations=" + userDestAdd + "&" + "mode=" + USER_MODE + "&" + "language=" + USER_LANG + "&" + "key=" + GOOGLE_API_KEY;
-    return axios.get(distanceApiUrl).then(res => res.data);  
-}
-
 //Function to call Google Geocoding API to get current user location from geocoordinates
 function getAddressFromGeoCoord(userLat, userLong) {
     var geocodingApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + userLat + "," + userLong + "&key=" + GOOGLE_API_KEY;;    
     return axios.get(geocodingApiUrl).then(res => res.data);  
+}
+
+//Function to fix grammar of directions speech output
+function fixDirectionInstructionsGrammar(speechOutput){
+    speechOutput = speechOutput.replaceAll("Destination", " and destination");
+    speechOutput = speechOutput.replaceAll("Turn", "turn");
+    speechOutput = speechOutput.replaceAll(SEARCH_FT, REPLACE_FT);
+    speechOutput = speechOutput.replaceAll(SEARCH_MI, REPLACE_MI);
+    return speechOutput;
 }
 
 const directionsLookUpHandler = {
@@ -68,11 +71,20 @@ const directionsLookUpHandler = {
 
                 // Call directions API to get directions from origin to destination
 
+                //Create variable URL
+                var directionsApiUrl = GOOGLE_DIRECTIONS_API + "origin=" + userOriginAdd + "&destination="
+var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&destinations=" + userDestAdd + "&" + "mode=" + USER_MODE + "&" + "language=" + USER_LANG + "&" + "key=" + GOOGLE_API_KEY;
+                //Call Directions API with function
+
+                //Get and format directions data within a function
+
+
+
                 //Create url for Google Directions api
                 //var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&" + "destinations=" + userDestAdd + "&" + "mode=" + USER_MODE + "&" + "language=" + USER_LANG + "&" + "key=" + GOOGLE_API_KEY;
-                var directionsAPIUrl = "https://maps.googleapis.com/maps/api/directions/json?origin=1100%20W%20Montgomery%20Ave,%20Philadelphia,%20PA%2019122&destination=2109%20N%20Broad%20St,%20Philadelphia,%20PA%2019122&mode=walking&key=AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
+                var directionsApiUrl = "https://maps.googleapis.com/maps/api/directions/json?origin=1100%20W%20Montgomery%20Ave,%20Philadelphia,%20PA%2019122&destination=2109%20N%20Broad%20St,%20Philadelphia,%20PA%2019122&mode=walking&key=AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
                 //Get time it will take to get from origin to destination
-                axios.get(directionsAPIUrl)
+                axios.get(directionsApiUrl)
                 .then(res => {
                     //head to w mont
                     var htmlString = res.data.routes[0].legs[0].steps[0].html_instructions;
@@ -100,11 +112,7 @@ const directionsLookUpHandler = {
                     speechOutput += res.data.routes[0].legs[0].steps[i].distance.text;
                     speechOutput += ".";
 
-                    //Change all occurences of "mi" and "ft" to miles and feet
-                    speechOutput = speechOutput.replaceAll(SEARCH_FT, REPLACE_FT);
-                    speechOutput = speechOutput.replaceAll(SEARCH_MI, REPLACE_MI);
-                    // PARES THE LAST STEP BECAUSE IT HAS TWO STRING IN IT
-
+                    speechOutput = fixDirectionInstructionsGrammar(speechOutput);
 
                     //Final step is added to speech output and does not contain the word "then" at the end
                     this.emit(":tell", speechOutput);

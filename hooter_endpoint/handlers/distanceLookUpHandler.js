@@ -9,7 +9,7 @@ const USER_LANG = "en-EN";
 
 //Function to call Google Distance Matrix API to calculate distance between origin and destination
 function getDistance(userOriginAdd, userDestAdd) {
-    var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&" + "destinations=" + userDestAdd + "&" + "mode=" + USER_MODE + "&" + "language=" + USER_LANG + "&" + "key=" + GOOGLE_API_KEY;
+    var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&destinations=" + userDestAdd + "&mode=" + USER_MODE + "&language=" + USER_LANG + "&key=" + GOOGLE_API_KEY;
     return axios.get(distanceApiUrl).then(res => res.data);  
 }
 
@@ -113,7 +113,7 @@ const distanceLookUpHandler = {
                                 userOriginAdd = data.addressLine1 + ' ' + data.addressLine2 + ' ' + data.addressLine3 + ' ' + data.city + ' ' + data.stateOrRegion;
                             }
                             //Create url for Google Distance Matrix API
-                            var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&" + "destinations=" + userDestAdd + "&" + "mode=" + USER_MODE + "&" + "language=" + USER_LANG + "&" + "key=" + GOOGLE_API_KEY;
+                            var distanceApiUrl = GOOGLE_DISTANCE_MATRIX_API + "origins=" + userOriginAdd + "&destinations=" + userDestAdd + "&mode=" + USER_MODE + "&language=" + USER_LANG + "&key=" + GOOGLE_API_KEY;
                             //Get time it will take to get from user origin to user destination
                             axios.get(distanceApiUrl)
                             .then(res => {
