@@ -4,6 +4,7 @@ const Alexa = require("alexa-sdk")
 const axios = require("axios");
 const das = new Alexa.services.DeviceAddressService();
 const GOOGLE_DIRECTIONS_API = "https://maps.googleapis.com/maps/api/directions/json?";
+const GOOGLE_GEOCODING_API = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
 const GOOGLE_API_KEY = "AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
 const USER_MODE = "walking";
 const SEARCH = "\<.*?>";
@@ -21,7 +22,7 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 //Function to call Google Geocoding API to get current user location from geocoordinates
 function getAddressFromGeoCoord(userLat, userLong) {
-    var geocodingApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + userLat + "," + userLong + "&key=" + GOOGLE_API_KEY; 
+    var geocodingApiUrl = GOOGLE_GEOCODING_API + userLat + "," + userLong + "&key=" + GOOGLE_API_KEY;  
     return axios.get(geocodingApiUrl).then(res => res.data);  
 }
 //Function to get building address from building data retrieved from database
