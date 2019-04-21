@@ -18,16 +18,19 @@ const eventsLookUpHandler = {
     var auth = jwtClient;
     //---------------------SLOT VALUES HANDLE BEGINS----------------------------------------
     if (this.event.request.intent.slots.dateoftheweek.value) {
+      //get date
       var userinputdate = this.event.request.intent.slots.dateoftheweek.value;
     } else {
       var userinputdate = new Date();
     }
     if (this.event.request.intent.slots.eventamount.value) {
+      //get number of event
       var eventamount = this.event.request.intent.slots.eventamount.value;
     } else {
       var eventamount = 5;
     }
     if (this.event.request.intent.slots.eventname.value) {
+      //get name of event
       var eventname = this.event.request.intent.slots.eventname.value;
       eventamount = 1;
     } else {
