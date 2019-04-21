@@ -85,146 +85,114 @@ function collectAndFormatUserDeviceAdd(data) {
 }
 //Main handler
 const distanceLookUpHandler = {
-  DistanceLookUpIntent: async function() {
-    var speechOutput = "";
-    //If user did not specify a destination
-    if (!this.event.request.intent.slots.destbuildingname.value) {
-      speechOutput =
-        "I'm sorry, I didn't hear your destination. Please try again and specify a destination.";
-      this.response.speak(speechOutput).listen(REPROMPT);
-      this.emit(":responseReady");
-    } else {
-      //User has specified a destination
-      var userDestAdd = "";
-      //Get user destination building name
-      var userDest = this.event.request.intent.slots.destbuildingname.value.toLowerCase();
-      //Retrieve address for user dest building
-      var destData = await getBuilding.getBuilding(userDest);
-      if (getBuildingAddress(destData)) {
-        userDestAdd = getBuildingAddress(destData);
-      } else {
-        //Building not in database
-        speechOutput =
-          "I'm sorry, I can't find " + userDest + ". Please try again";
-        this.response.speak(speechOutput).listen(REPROMPT);
-        this.emit(":responseReady");
-      }
-      //If user specifies origin building
-      if (this.event.request.intent.slots.originbuildingname.value) {
-        var userOriginAdd = "";
-        //Get user origin building name
-        var userOrigin = this.event.request.intent.slots.originbuildingname.value.toLowerCase();
-        //Retrieve address for user origin building
-        var origData = await getBuilding.getBuilding(userOrigin);
-        if (getBuildingAddress(origData)) {
-          userOriginAdd = getBuildingAddress(origData);
-        } else {
-          //Building not in database
-          speechOutput =
-            "I'm sorry, I can't find " + userOrigin + ". Please try again";
-          this.response.speak(speechOutput).listen(REPROMPT);
-          this.emit(":responseReady");
-        }
-        var distanceData = await getDistance(userOriginAdd, userDestAdd);
-        speechOutput += collectAndFormatDistance(
-          distanceData,
-          userOrigin,
-          userDest
-        );
-        this.response.speak(speechOutput).listen(REPROMPT);
-        this.emit(":responseReady");
-      } else {
-        //User has not specified origin, use user location as origin
-        var userOriginAdd = "";
-        //If user's device can share location
-        if (this.event.context.System.device.supportedInterfaces.Geolocation) {
-          //Case: User using mobile device eg. phone with Alexa app
-          //Use Alexa Location Services to get user current location
-          var geoObject = this.event.context.Geolocation;
-          //If user permission for location not given yet -- get permission
-          if (!geoObject || !geoObject.coordinate) {
-            this.response.speak(
-              "Hooter would like to use your location. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again."
-            );
-            const permissions = ["alexa::devices:all:geolocation:read"];
-            this.response.askForPermissionsConsentCard(permissions);
-            this.emit(":responseReady");
-          } else {
-            //User has already given permission for location
-            var freshness =
-              (new Date(this.event.request.timestamp) -
-                new Date(geoObject.timestamp)) /
-              1000; //Freshness in seconds
-            var ACCURACY_THRESHOLD = 25; //Accuracy of 25 meters required
-            //Check if user location is "fresh" in relation to when intent was executed
-            if (
-              geoObject &&
-              geoObject.coordinate &&
-              geoObject.coordinate.accuracyInMeters < ACCURACY_THRESHOLD &&
-              freshness < 60
-            ) {
-              //Get user current geo coordinates
-              var userLat = geoObject.coordinate.latitudeInDegrees;
-              var userLong = geoObject.coordinate.longitudeInDegrees;
-              //Get user address from user latitude and longitude
-              var geoAddressData = await getAddressFromGeoCoord(
-                userLat,
-                userLong
-              );
-              userOriginAdd = geoAddressData.results[0].formatted_address;
-              //Call Google Distance Matrix API to get distance from user origin to user destination
-              var distanceData = await getDistance(userOriginAdd, userDestAdd);
-              speechOutput += collectAndFormatDistance(
-                distanceData,
-                userOriginAdd,
-                userDest
-              );
-              this.response.speak(speechOutput).listen(REPROMPT);
-              this.emit(":responseReady");
-            }
-          }
-        } else {
-          //User's device cannot share location. User using stationary Alexa device eg. Echo
-          //Use Alexa Devices API to get device address
-          //If user has given permission for location
-          if (this.event.context.System.user.permissions) {
-            const token = this.event.context.System.user.permissions
-              .consentToken;
-            const apiEndpoint = this.event.context.System.apiEndpoint;
-            const deviceId = this.event.context.System.device.deviceId;
-            //Retrieve address for user origin
-            var deviceAddData = await getUserDeviceAdd(
-              deviceId,
-              apiEndpoint,
-              token
-            );
-            if (collectAndFormatUserDeviceAdd(deviceAddData) === "") {
-              speechOutput =
-                "I'm sorry. There is no street address listed for your device.";
-              this.response.speak(speechOutput).listen(REPROMPT);
-              this.emit(":responseReady");
-            } else {
-              userOriginAdd = collectAndFormatUserDeviceAdd(deviceAddData);
-            }
-            //Call Google Distance Matrix API to get distance from user origin to user destination
-            var distanceData = await getDistance(userOriginAdd, userDestAdd);
-            speechOutput += collectAndFormatDistance(
-              distanceData,
-              userOriginAdd,
-              userDest
-            );
+    "DistanceLookUpIntent": async function () {
+        var speechOutput = "";
+        //If user did not specify a destination building name or destination address
+        if(!this.event.request.intent.slots.destbuildingname.value && !this.event.request.intent.slots.destaddress.value){
+            speechOutput = "I\'m sorry, I didn't hear your destination. Please try again and specify a destination.";
             this.response.speak(speechOutput).listen(REPROMPT);
             this.emit(":responseReady");
-          } else {
-            //User has not given permission for location yet
-            //Get user to give permission to get their device location
-            this.response.speak(
-              "Hooter would like to use your device address. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again."
-            );
-            const permissions = ["read::alexa:device:all:address"];
-            this.response.askForPermissionsConsentCard(permissions);
+        } else { //User has specified a destination
+            var userDestAdd = "";
+            var userOriginAdd = "";
+            var speechDestination = "";
+            var speechOrigin = "";
+            //Case: User has specified a building name as destination
+            if(this.event.request.intent.slots.destbuildingname.value){
+                //Get user destination building name
+                var userDest = this.event.request.intent.slots.destbuildingname.value.toLowerCase();
+                speechDestination = userDest;
+                //Retrieve address for user dest building
+                var destData = await getBuilding.getBuilding(userDest);
+                if(getBuildingAddress(destData)){
+                    userDestAdd = getBuildingAddress(destData);
+                } else { //Building not in database
+                    speechOutput = "I\'m sorry, I can't find " + userDest + ". Please try again";
+                    this.response.speak(speechOutput).listen(REPROMPT);
+                    this.emit(":responseReady");
+                }
+            } else {
+            //Case: User has specified an address as destination
+                userDestAdd = this.event.request.intent.slots.destaddress.value;
+                speechDestination = userDestAdd;
+            }
+            //Case: User has specified a building name as origin
+            if (this.event.request.intent.slots.originbuildingname.value){
+                //Get user origin building name
+                var userOrigin = this.event.request.intent.slots.originbuildingname.value.toLowerCase();
+                speechOrigin = userOrigin;
+                //Retrieve address for user origin building
+                var origData = await getBuilding.getBuilding(userOrigin);
+                if(getBuildingAddress(origData)){
+                    userOriginAdd = getBuildingAddress(origData);
+                } else { //Building not in database
+                    speechOutput = "I\'m sorry, I can't find " + userOrigin + ". Please try again";
+                    this.response.speak(speechOutput).listen(REPROMPT);
+                    this.emit(":responseReady");
+                }
+            } else if (this.event.request.intent.slots.originaddress.value) {
+            //Case: User has specified an address as origin
+                //Get user origin address
+                userOriginAdd = this.event.request.intent.slots.originaddress.value;
+                speechOrigin = userOriginAdd;
+            } else {
+            //Case: User has not specified an origin, use user location as origin
+                //Case: User device can share location eg. mobile device with Alexa app
+                if (this.event.context.System.device.supportedInterfaces.Geolocation) {
+                    //Use Alexa Location Services to get user current location
+                    var geoObject = this.event.context.Geolocation;
+                    //If user permission for location not given yet -- get permission
+                    if (!geoObject || !geoObject.coordinate) {
+                        this.response.speak("Hooter would like to use your location. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.");
+                        const permissions = ["alexa::devices:all:geolocation:read"];
+                        this.response.askForPermissionsConsentCard(permissions);
+                        this.emit(":responseReady");
+                    } else { //User has already given permission for location
+                        var freshness = ( new Date(this.event.request.timestamp) - new Date(geoObject.timestamp) ) / 1000; //Freshness in seconds
+                        var ACCURACY_THRESHOLD = 25; //Accuracy of 25 meters required
+                        //Check if user location is "fresh" in relation to when intent was executed
+                        if (geoObject && geoObject.coordinate && geoObject.coordinate.accuracyInMeters < ACCURACY_THRESHOLD && freshness < 60 ) { 
+                            //Get user current geo coordinates
+                            var userLat = geoObject.coordinate.latitudeInDegrees;
+                            var userLong = geoObject.coordinate.longitudeInDegrees;
+                            //Get user address from user latitude and longitude
+                            var geoAddressData = await getAddressFromGeoCoord(userLat, userLong);
+                            userOriginAdd = geoAddressData.results[0].formatted_address;
+                            speechOrigin = userOriginAdd;
+                        }
+                    }
+                } else {
+                //Case: User device cannot share location eg. stationary Alexa device - Echo
+                    //Use Alexa Devices API to get device address
+                    //If user has given permission for location
+                    if (this.event.context.System.user.permissions) {
+                        const token = this.event.context.System.user.permissions.consentToken;
+                        const apiEndpoint = this.event.context.System.apiEndpoint;
+                        const deviceId = this.event.context.System.device.deviceId;
+                        //Retrieve address for user origin
+                        var deviceAddData = await getUserDeviceAdd(deviceId, apiEndpoint, token);
+                        if(collectAndFormatUserDeviceAdd(deviceAddData) === ""){
+                            speechOutput = "I\'m sorry. There is no street address listed for your device.";
+                            this.response.speak(speechOutput).listen(REPROMPT);
+                            this.emit(":responseReady"); 
+                        } else {
+                            userOriginAdd = collectAndFormatUserDeviceAdd(deviceAddData);
+                            speechOrigin = userOriginAdd;
+                        } 
+                    } else { //User has not given permission for location yet
+                        //Get user to give permission to get their device location
+                        this.response.speak('Hooter would like to use your device address. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.');
+                        const permissions = ['read::alexa:device:all:address'];
+                        this.response.askForPermissionsConsentCard(permissions);
+                        this.emit(':responseReady');
+                    }      
+                }
+            } 
+            //Call Google Distance Matrix API to get distance from user origin to user destination
+            var distanceData = await getDistance(userOriginAdd, userDestAdd);
+            speechOutput += collectAndFormatDistance(distanceData, speechOrigin, speechDestination);
+            this.response.speak(speechOutput).listen(REPROMPT);
             this.emit(":responseReady");
-          }
         }
       }
     }
