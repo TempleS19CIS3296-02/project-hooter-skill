@@ -2,6 +2,7 @@
 var { google } = require("googleapis");
 var key = require("../HooterSkill-5fde0850cf41.json"); // private json
 const reprompt = "What can I help you with?";
+var AmazonSpeech = require("ssml-builder/amazon_speech");
 
 const eventsLookUpHandler = {
   EventsLookUpIntent: async function() {
@@ -48,12 +49,11 @@ const eventsLookUpHandler = {
         q: eventname
       },
       (err, res) => {
-        var speechOutput = "";
+        var speech = new AmazonSpeech();
         var oneDay = 24 * 60 * 60 * 1000;
         if (err) return console.log("The API returned an error: " + err);
         const events = res.data.items;
         if (events.length) {
-          speechOutput += "Upcoming " + " events: ";
           events.map((event, i) => {
             const start = new Date(event.start.dateTime || event.start.date);
             const end = new Date(event.end.dateTime || event.end.date);
@@ -66,14 +66,20 @@ const eventsLookUpHandler = {
               start.getDate() +
               "/" +
               start.getFullYear();
-            speechOutput += `Event ${i + 1} on ${startDate}: ${
-              event.summary
-            } (${diffDays} days left) `;
+            speech
+              .say(
+                `Event ${i + 1} on ${startDate}: ${
+                  event.summary
+                } (${diffDays} days left) `
+              )
+              .pause("500ms");
           });
         } else {
-          speechOutput +=
-            "I can't find the event " + eventname + ". Please try again!";
+          speech.say(
+            "I can't find the event " + eventname + ". Please try again!"
+          );
         }
+        var speechOutput = speech.ssml();
         this.response.speak(speechOutput).listen(reprompt);
         this.emit(":responseReady");
       }
