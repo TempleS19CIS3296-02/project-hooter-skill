@@ -1,0 +1,343 @@
+[
+    {
+        "context_type": "Course",
+        "course_id": 52654,
+        "type": "submitting",
+        "ignore": "https://templeu.instructure.com/api/v1/users/self/todo/assignment_323283/submitting?permanent=0",
+        "ignore_permanently": "https://templeu.instructure.com/api/v1/users/self/todo/assignment_323283/submitting?permanent=1",
+        "assignment": {
+            "id": 323283,
+            "description": "\u003clink rel=\"stylesheet\" href=\"https://instructure-uploads.s3.amazonaws.com/account_99570000000000001/attachments/3425541/canvas_global_app.css\"\u003e\u003ch4\u003e\u003cspan\u003e\u003cstrong\u003ePart I - Team assignment  - (due before end of first lab)\u003c/strong\u003e\u003c/span\u003e\u003c/h4\u003e\r\n\u003cp\u003eCreate a team of \u003cstrong\u003efour\u003c/strong\u003e to work on a pre-approved project (discuss with the professor for a team of a different size). You can choose any partners you want. See the professor or TA and ask him to create the group in Canvas.\u003c/p\u003e\r\n\u003cp\u003eList of pre-approved projects:\u003c/p\u003e\r\n\u003cul\u003e\r\n\u003cli\u003e\n\u003cspan\u003e3296-001 (MWF 11am):\u003c/span\u003e \u003ca href=\"https://github.com/TempleS19CIS3296-01/all-projects-3296-001\"\u003ehttps://github.com/TempleS19CIS3296-01/all-projects-3296-001\u003c/a\u003e\n\u003c/li\u003e\r\n\u003cli\u003e\n\u003cspan\u003e3296-001 (MWF 2pm):\u003c/span\u003e \u003ca href=\"https://github.com/TempleS19CIS3296-02/all-projects-3296-002-1\"\u003ehttps://github.com/TempleS19CIS3296-02/all-projects-3296-002-1\u003c/a\u003e\n\u003c/li\u003e\r\n\u003c/ul\u003e\r\n\u003cp\u003e\u003cspan\u003eAccept the assignment in Github Classroom to create your team repo. The first team member will have to create a team that will be join by the others team member. Use the appropriate link below:\u003c/span\u003e\u003c/p\u003e\r\n\u003cul\u003e\r\n\u003cli\u003e\n\u003cspan\u003e3296-001 (MWF 11am):  \u003c/span\u003e\u003ca style=\"font-size: 1rem;\" href=\"https://classroom.github.com/g/nYidDmjo\"\u003ehttps://classroom.github.com/g/nYidDmjo\u003c/a\u003e\n\u003c/li\u003e\r\n\u003cli\u003e\n\u003cspan\u003e3296-002 (MWF 2pm): \u003c/span\u003e\u003ca href=\"https://classroom.github.com/g/249KHhcr\"\u003ehttps://classroom.github.com/g/249KHhcr\u003c/a\u003e\n\u003c/li\u003e\r\n\u003c/ul\u003e\r\n\u003cp\u003e \u003c/p\u003e\r\n\u003ch4\u003e\u003cstrong\u003ePart  II - Update and expand project proposal\u003cbr\u003e\u003c/strong\u003e\u003c/h4\u003e\r\n\u003cp class=\"p1\"\u003eUse the feedback from all team member and expand the project proposal.\u003c/p\u003e\r\n\u003cul\u003e\r\n\u003cli\u003eReview all sections include feedback, expectations and competencies of all team members.\u003c/li\u003e\r\n\u003cli\u003eIn the section \u003cem\u003eP\u003c/em\u003e\u003cspan\u003e\u003cem\u003eroject Relevance,\u003c/em\u003e make sure to \u003c/span\u003ehighlight what you already know and what \u003cspan\u003eis new that you didn't already have experience with it.\u003c/span\u003e\n\u003c/li\u003e\r\n\u003cli\u003e\u003cspan\u003eCreate a project board in Github or Trello.  Include tasks for each team members for at least the two upcoming weeks. \u003c/span\u003e\u003c/li\u003e\r\n\u003cli\u003e\n\u003cspan\u003eAdd a section Goals and Milestone where you list specific goals and milestone you want to archive in this project. Describe what kind of Sofware Developement Process you will use and how your plan is reflecting this.  \u003c/span\u003e\u003cspan\u003e\u003c/span\u003e\n\u003c/li\u003e\r\n\u003cli\u003e\n\u003cspan\u003eIn your plan expect time for the following further assignments:\u003c/span\u003e\r\n\u003cul\u003e\r\n\u003cli\u003e\u003cspan\u003eAn in class presentation of your project highlighting the new things you are learning. \u003c/span\u003e\u003c/li\u003e\r\n\u003cli\u003e\u003cspan\u003eDuring the last lab, a demonstration to the TA with a final update to the project proposal. \u003c/span\u003e\u003c/li\u003e\r\n\u003cli\u003e\u003cspan\u003eA personal reflection on the project (400 words).\u003c/span\u003e\u003c/li\u003e\r\n\u003c/ul\u003e\r\n\u003c/li\u003e\r\n\u003c/ul\u003e\r\n\u003col\u003e\r\n\u003cli style=\"list-style-type: none;\"\u003e\r\n\u003c/li\u003e\n\u003c/ol\u003e\r\n\u003cp\u003e\u003cstrong\u003eWhat to submit?\u003c/strong\u003e\u003c/p\u003e\r\n\u003cp\u003eSubmit a link to a readme file in your team repo with the answers to all questions.  Only one submission for the team is necessary, please put names of all team members in the submission. \u003c/p\u003e\r\n\u003cp\u003e \u003c/p\u003e\u003cscript src=\"https://instructure-uploads.s3.amazonaws.com/account_99570000000000001/attachments/3425540/canvas_global_app.js\"\u003e\u003c/script\u003e",
+            "due_at": "2019-04-01T18:00:00Z",
+            "unlock_at": null,
+            "lock_at": null,
+            "points_possible": 10.0,
+            "grading_type": "points",
+            "assignment_group_id": 96461,
+            "grading_standard_id": null,
+            "created_at": "2018-12-28T18:17:03Z",
+            "updated_at": "2019-03-27T16:00:53Z",
+            "peer_reviews": false,
+            "automatic_peer_reviews": false,
+            "position": 16,
+            "grade_group_students_individually": false,
+            "anonymous_peer_reviews": false,
+            "group_category_id": 9067,
+            "post_to_sis": false,
+            "moderated_grading": false,
+            "omit_from_final_grade": false,
+            "intra_group_peer_reviews": false,
+            "anonymous_instructor_annotations": false,
+            "anonymous_grading": false,
+            "graders_anonymous_to_graders": false,
+            "grader_count": 0,
+            "grader_comments_visible_to_graders": true,
+            "final_grader_id": null,
+            "grader_names_visible_to_final_grader": true,
+            "allowed_attempts": -1,
+            "secure_params": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsdGlfYXNzaWdubWVudF9pZCI6ImFiN2UxYWMxLThiOGYtNGE2Ny1iZWRmLWIxZTllMWFkNjgwNCJ9.KCDEXbj8jK2i336b84Jqk7UFHDt3JMI_ua0jGzar2UM",
+            "course_id": 52654,
+            "name": "Project Outline",
+            "submission_types": [
+                "online_upload"
+            ],
+            "has_submitted_submissions": true,
+            "due_date_required": false,
+            "max_name_length": 255,
+            "in_closed_grading_period": false,
+            "is_quiz_assignment": false,
+            "can_duplicate": true,
+            "original_course_id": null,
+            "original_assignment_id": null,
+            "original_assignment_name": null,
+            "workflow_state": "published",
+            "muted": false,
+            "html_url": "https://templeu.instructure.com/courses/52654/assignments/323283",
+            "allowed_extensions": [
+                "doc",
+                "docx",
+                "pdf"
+            ],
+            "use_rubric_for_grading": true,
+            "free_form_criterion_comments": false,
+            "rubric": [
+                {
+                    "id": "_9528",
+                    "points": 4.0,
+                    "description": "Project Relevance",
+                    "long_description": "Project Relevance, make sure to highlight what you already know and whath is new that you didn't already have experience with it.",
+                    "ignore_for_scoring": null,
+                    "criterion_use_range": false,
+                    "ratings": [
+                        {
+                            "id": "blank",
+                            "points": 4.0,
+                            "description": "excellent",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_2755",
+                            "points": 3.0,
+                            "description": "good",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_4674",
+                            "points": 2.0,
+                            "description": "poor",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "blank_2",
+                            "points": 0.0,
+                            "description": "No Marks",
+                            "long_description": ""
+                        }
+                    ]
+                },
+                {
+                    "id": "_8991",
+                    "points": 4.0,
+                    "description": "Goals and Milestone",
+                    "long_description": "Goals and Milestone where you list specific goals and milestone you want to archive in this project",
+                    "ignore_for_scoring": null,
+                    "criterion_use_range": false,
+                    "ratings": [
+                        {
+                            "id": "_6639",
+                            "points": 4.0,
+                            "description": "excellent",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_8203",
+                            "points": 3.0,
+                            "description": "good",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_9548",
+                            "points": 2.0,
+                            "description": "poor",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "_255",
+                            "points": 0.0,
+                            "description": "No Marks",
+                            "long_description": ""
+                        }
+                    ]
+                },
+                {
+                    "id": "_2181",
+                    "points": 4.0,
+                    "description": "Work Plan",
+                    "long_description": "detail what tasks each team member will do for at least for the two coming weeks. Describe what kind of Sofware Developement Process you will use and how your plan is reflecting this",
+                    "ignore_for_scoring": null,
+                    "criterion_use_range": false,
+                    "ratings": [
+                        {
+                            "id": "_6242",
+                            "points": 4.0,
+                            "description": "excellent",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_7922",
+                            "points": 3.0,
+                            "description": "good",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_406",
+                            "points": 2.0,
+                            "description": "poor",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "_308",
+                            "points": 0.0,
+                            "description": "No Marks",
+                            "long_description": ""
+                        }
+                    ]
+                },
+                {
+                    "id": "_5575",
+                    "points": 3.0,
+                    "description": "All sections",
+                    "long_description": "Review all sections include feedback, expectations and competencies of all team members",
+                    "ignore_for_scoring": null,
+                    "criterion_use_range": false,
+                    "ratings": [
+                        {
+                            "id": "_8169",
+                            "points": 3.0,
+                            "description": "excellent",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_5242",
+                            "points": 2.0,
+                            "description": "good",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "21069_5114",
+                            "points": 1.0,
+                            "description": "poor",
+                            "long_description": ""
+                        },
+                        {
+                            "id": "_8274",
+                            "points": 0.0,
+                            "description": "No Marks",
+                            "long_description": ""
+                        }
+                    ]
+                }
+            ],
+            "rubric_settings": {
+                "id": 23230,
+                "title": "Project outline rubric",
+                "points_possible": 15.0,
+                "free_form_criterion_comments": false,
+                "hide_score_total": false,
+                "hide_points": false
+            },
+            "published": true,
+            "only_visible_to_overrides": true,
+            "locked_for_user": false,
+            "submissions_download_url": "https://templeu.instructure.com/courses/52654/assignments/323283/submissions?zip=1",
+            "anonymize_students": false
+        },
+        "html_url": "https://templeu.instructure.com/courses/52654/assignments/323283#submit"
+    },
+    {
+        "context_type": "Course",
+        "course_id": 55401,
+        "type": "submitting",
+        "ignore": "https://templeu.instructure.com/api/v1/users/self/todo/assignment_410094/submitting?permanent=0",
+        "ignore_permanently": "https://templeu.instructure.com/api/v1/users/self/todo/assignment_410094/submitting?permanent=1",
+        "assignment": {
+            "id": 410094,
+            "description": "\u003clink rel=\"stylesheet\" href=\"https://instructure-uploads.s3.amazonaws.com/account_99570000000000001/attachments/3425541/canvas_global_app.css\"\u003e\u003cp\u003e\u003ca class=\"instructure_file_link instructure_scribd_file\" title=\"Homework 7.pdf\" href=\"https://templeu.instructure.com/courses/55401/files/4648919/download?verifier=p13XH21h69RBKXxr1KIpK6OwAepEhAWqnAfnapLK\u0026amp;wrap=1\" data-api-endpoint=\"https://templeu.instructure.com/api/v1/courses/55401/files/4648919\" data-api-returntype=\"File\"\u003eHomework 7.pdf\u003c/a\u003e\u003c/p\u003e\u003cscript src=\"https://instructure-uploads.s3.amazonaws.com/account_99570000000000001/attachments/3425540/canvas_global_app.js\"\u003e\u003c/script\u003e",
+            "due_at": "2019-04-02T03:59:59Z",
+            "unlock_at": "2019-03-25T04:00:00Z",
+            "lock_at": null,
+            "points_possible": 10.0,
+            "grading_type": "points",
+            "assignment_group_id": 113810,
+            "grading_standard_id": null,
+            "created_at": "2019-03-23T17:37:07Z",
+            "updated_at": "2019-03-28T00:35:42Z",
+            "peer_reviews": false,
+            "automatic_peer_reviews": false,
+            "position": 7,
+            "grade_group_students_individually": false,
+            "anonymous_peer_reviews": false,
+            "group_category_id": null,
+            "post_to_sis": false,
+            "moderated_grading": false,
+            "omit_from_final_grade": false,
+            "intra_group_peer_reviews": false,
+            "anonymous_instructor_annotations": false,
+            "anonymous_grading": false,
+            "graders_anonymous_to_graders": false,
+            "grader_count": 0,
+            "grader_comments_visible_to_graders": true,
+            "final_grader_id": null,
+            "grader_names_visible_to_final_grader": true,
+            "allowed_attempts": -1,
+            "secure_params": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsdGlfYXNzaWdubWVudF9pZCI6IjRiNjBkNzY0LTE3MzctNGFkYS04ZDEzLWVmZmM2ZWZlNDk5ZCJ9.ccAyrL6HaGjE4k28UMcHsCIBRAWbSqKi1oxVyKf2nPk",
+            "course_id": 55401,
+            "name": "Homework 7",
+            "submission_types": [
+                "online_upload"
+            ],
+            "has_submitted_submissions": true,
+            "due_date_required": false,
+            "max_name_length": 255,
+            "in_closed_grading_period": false,
+            "is_quiz_assignment": false,
+            "can_duplicate": true,
+            "original_course_id": null,
+            "original_assignment_id": null,
+            "original_assignment_name": null,
+            "workflow_state": "published",
+            "muted": false,
+            "html_url": "https://templeu.instructure.com/courses/55401/assignments/410094",
+            "published": true,
+            "only_visible_to_overrides": false,
+            "locked_for_user": false,
+            "submissions_download_url": "https://templeu.instructure.com/courses/55401/assignments/410094/submissions?zip=1",
+            "anonymize_students": false
+        },
+        "html_url": "https://templeu.instructure.com/courses/55401/assignments/410094#submit"
+    },
+    {
+        "context_type": "Course",
+        "course_id": 52925,
+        "type": "submitting",
+        "ignore": "https://templeu.instructure.com/api/v1/users/self/todo/assignment_411063/submitting?permanent=0",
+        "ignore_permanently": "https://templeu.instructure.com/api/v1/users/self/todo/assignment_411063/submitting?permanent=1",
+        "assignment": {
+            "id": 411063,
+            "description": "",
+            "due_at": "2019-04-02T03:59:59Z",
+            "unlock_at": "2019-03-29T04:00:00Z",
+            "lock_at": "2019-05-06T03:59:59Z",
+            "points_possible": 5.0,
+            "grading_type": "points",
+            "assignment_group_id": 97344,
+            "grading_standard_id": null,
+            "created_at": "2019-03-26T10:54:42Z",
+            "updated_at": "2019-03-29T04:00:04Z",
+            "peer_reviews": false,
+            "automatic_peer_reviews": false,
+            "position": 10,
+            "grade_group_students_individually": false,
+            "anonymous_peer_reviews": false,
+            "group_category_id": null,
+            "post_to_sis": false,
+            "moderated_grading": false,
+            "omit_from_final_grade": false,
+            "intra_group_peer_reviews": false,
+            "anonymous_instructor_annotations": false,
+            "anonymous_grading": false,
+            "graders_anonymous_to_graders": false,
+            "grader_count": 0,
+            "grader_comments_visible_to_graders": true,
+            "final_grader_id": null,
+            "grader_names_visible_to_final_grader": true,
+            "allowed_attempts": -1,
+            "secure_params": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsdGlfYXNzaWdubWVudF9pZCI6ImU2OTFlMjJhLThiNDEtNGJmMS1iNmRhLThjODViOWM3YzIxZiJ9.E2WuP2sF_HXc05vV2XPAyvcL_IGDkYHWKtFKEhNPxFk",
+            "course_id": 52925,
+            "name": "Pre Quiz Chapter 34",
+            "submission_types": [
+                "online_quiz"
+            ],
+            "has_submitted_submissions": false,
+            "due_date_required": false,
+            "max_name_length": 255,
+            "in_closed_grading_period": false,
+            "is_quiz_assignment": true,
+            "can_duplicate": false,
+            "original_course_id": null,
+            "original_assignment_id": null,
+            "original_assignment_name": null,
+            "workflow_state": "published",
+            "muted": false,
+            "html_url": "https://templeu.instructure.com/courses/52925/assignments/411063",
+            "quiz_id": 68602,
+            "anonymous_submissions": false,
+            "published": true,
+            "only_visible_to_overrides": false,
+            "locked_for_user": false,
+            "submissions_download_url": "https://templeu.instructure.com/courses/52925/quizzes/68602/submissions?zip=1",
+            "anonymize_students": false
+        },
+        "html_url": "https://templeu.instructure.com/courses/52925/assignments/411063#submit"
+    }
+]
