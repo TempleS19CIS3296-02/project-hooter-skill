@@ -3,10 +3,10 @@ const getBuilding = require("../buildingGet/getBuilding.js");
 const Alexa = require("alexa-sdk");
 const axios = require("axios");
 const das = new Alexa.services.DeviceAddressService();
-const GOOGLE_DISTANCE_MATRIX_API =
-  "https://maps.googleapis.com/maps/api/distancematrix/json?";
-const GOOGLE_GEOCODING_API =
-  "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+const GOOGLE_DISTANCE_MATRIX_API = 
+    "https://maps.googleapis.com/maps/api/distancematrix/json?";
+const GOOGLE_GEOCODING_API = 
+    "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
 const GOOGLE_API_KEY = "AIzaSyAvq7umSxljS8Jo1_PojlODEScs9c8Pyy0";
 const USER_MODE = "walking";
 const USER_LANG = "en-EN";
@@ -23,7 +23,7 @@ function getBuildingAddress(userData) {
 //Function to call Google Distance Matrix API to calculate distance between origin and destination
 function getDistance(userOriginAdd, userDestAdd) {
   var distanceApiUrl =
-    GOOGLE_DISTANCE_MATRIX_API +
+    GOOGLE_DISTANCE_MATRIX_API + 
     "origins=" +
     userOriginAdd +
     "&destinations=" +
@@ -194,9 +194,7 @@ const distanceLookUpHandler = {
             this.response.speak(speechOutput).listen(REPROMPT);
             this.emit(":responseReady");
         }
-      }
     }
-  }
-};
+}
 
 module.exports = distanceLookUpHandler;

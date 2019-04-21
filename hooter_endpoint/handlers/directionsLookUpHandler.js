@@ -231,9 +231,7 @@ const directionsLookUpHandler = {
             this.response.speak(speechOutput).listen(REPROMPT);
             this.emit(":responseReady");
         }
-      }
     }
-  }
-};
+}
 
 module.exports = directionsLookUpHandler;
