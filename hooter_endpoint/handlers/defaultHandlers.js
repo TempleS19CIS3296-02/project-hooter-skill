@@ -2,6 +2,8 @@ const WELCOME_MESSAGE = "Welcome to Hooter Skill, how can I help you";
 const HELP_MESSAGE =
   "You can ask for building's hours or latest news. Try saying when does tech center open.";
 const HELP_REPROMPT = "What can I help you with?";
+const ERROR_MESSAGE =
+  "I didn't understand. If you want to quit, just say goodbye. How can I help you?";
 const STOP_MESSAGE = "Go Owl!";
 
 //default handler functions for an Alexa skill
@@ -26,6 +28,13 @@ const defaultHandlers = {
   },
   "AMAZON.StopIntent": function() {
     this.response.speak(STOP_MESSAGE);
+    this.emit(":responseReady");
+  },
+  Unhandled: function() {
+    const speechOutput = ERROR_MESSAGE;
+    const reprompt = HELP_REPROMPT;
+
+    this.response.speak(speechOutput).listen(reprompt);
     this.emit(":responseReady");
   }
 };
