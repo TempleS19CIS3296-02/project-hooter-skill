@@ -1,6 +1,6 @@
 const WELCOME_MESSAGE = "Welcome to Hooter Skill, how can I help you";
 const HELP_MESSAGE =
-  "You can ask for Temple building's hours, upcoming events, and direction. Try saying when does tech center open or what are some upcoming events. You can also say when is study days.";
+  "You can ask for Temple building's hours, upcoming events, and direction. Try saying, when does tech center open or, what are some upcoming events. You can also say when is study days.";
 const HELP_REPROMPT = "What can I help you with?";
 const ERROR_MESSAGE =
   "I didn't understand. If you want to quit, just say goodbye. How can I help you?";
