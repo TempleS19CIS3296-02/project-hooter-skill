@@ -9,14 +9,9 @@
 
 const axios = require("axios");
 const moment = require("moment");
-// axios.defaults.baseURL = "https://templeu.instructure.com/api/v1";
-// axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-// axios.defaults.headers.common = { Authorization: `bearer ${AUTH_TOKEN}` };
 
 exports.getToDo = function (AUTH_TOKEN, map) {
-  // const url = "https://templeu.instructure.com/api/v1/users/self/todo"; //Canvas API url
   let response = ""; //http response
-  // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
   try {
     // Make the request for the authorized user's to do list
     return response = axios({
@@ -45,7 +40,8 @@ function buildTodoListSpeech(toDoList, map) {
   }
 
   toDoList.sort(compareDate);
-  var speechText = "Your Canvas to do list is: ";
+  // var speechText = "Your Canvas to do list is: ";
+  var speechText = "";
   for (let i = 0; i < toDoList.length; i++) {
     speechText += ("\n\t" + getToDoListItem(toDoList[i], map.get(toDoList[i].course_id)));
   }
