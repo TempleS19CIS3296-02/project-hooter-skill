@@ -19,7 +19,7 @@ exports.getToDo = function (AUTH_TOKEN, map) {
   // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
   try {
     // Make the request for the authorized user's to do list
-    response = axios({
+    return response = axios({
       method: "get",
       url: "https://templeu.instructure.com/api/v1/users/self/todo?per_page=20",
       // url: "/users/self/todo",
@@ -35,36 +35,43 @@ exports.getToDo = function (AUTH_TOKEN, map) {
     console.error(error);
   }
 
-  //TODO
-  //return filtered version
-  //return nothing to do
   return response;
 };
 
 function buildTodoListSpeech(toDoList, map) {
 
+  if (toDoList === "") {
+    return "You're all caught up!";
+  }
+
   toDoList.sort(compareDate);
   var speechText = "Your Canvas to do list is: ";
   for (let i = 0; i < toDoList.length; i++) {
-    speechText += getToDoListItem(toDoList[i], map.get(toDoList[i].course_id));
+    speechText += ("\n\t" + getToDoListItem(toDoList[i], map.get(toDoList[i].course_id)));
   }
+
+  speechText = speechText.replace("&", "and");
+
   return speechText;
 }
 
 function getToDoListItem(item, course_name) {
 
   let dueDate = item.assignment.due_at;
+  let assignment = item.assignment.name;
   dueDate = moment(item.assignment.due_at).format('MMMM Do [at] hh:mm A');
 
+  // //format for console testing
   // var str =
   //   "\n" + course_name + ": " +
   //   item.assignment.name +
   //   "\n\tdue date: " +
   //   dueDate;
 
+  //format for Alexa output
   var str = course_name + ": " +
-    item.assignment.name +
-    "due date: " + dueDate + " ";
+    assignment +
+    " due date: " + dueDate + ". ";
 
 
   return str;
