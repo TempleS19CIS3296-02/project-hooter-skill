@@ -1,8 +1,8 @@
 "use strict";
 const getBuilding = require("../buildingGet/getBuilding.js");
-
+const reprompt = "What can I help you with?";
 const hoursLookUpHandler = {
-  "HoursLookUpIntent": async function () {
+  HoursLookUpIntent: async function() {
     var speechOutput = "";
     var userday = "";
     var weekday = [
@@ -17,24 +17,25 @@ const hoursLookUpHandler = {
     ];
     //==============================================
     //API Call to user input building
-    var userbuildingname = (this.event.request.intent.slots.buildingname.value).toLowerCase();
-    if (userbuildingname){
-      speechOutput += userbuildingname + "\'s hours ";
+    //---------------------SLOT VALUES HANDLE BEGINS----------------------------------------
+    var userbuildingname = this.event.request.intent.slots.buildingname.value.toLowerCase();
+    if (userbuildingname) {
+      speechOutput += userbuildingname + "'s hours ";
       var data = await getBuilding.getBuilding(userbuildingname);
-      if (data.Count > 0){
+      if (data.Count > 0) {
         if (this.event.request.intent.slots.dateoftheweek.value) {
           var user_input_date = new Date(
             this.event.request.intent.slots.dateoftheweek.value
           );
-          userday = weekday[user_input_date.getDay()]; //try to get the day from user
+          userday = weekday[user_input_date.getDay()];
         } else {
           //if the user doesn't specify the day
           //Get the day for today
-          //==============================================
           var today = new Date();
           var dayoftheweek = weekday[today.getDay()];
           userday = dayoftheweek;
         }
+        //---------------------SLOT VALUES HANDLE ENDS----------------------------------------
         speechOutput += "on " + userday + " is ";
         switch (userday) {
           case "sunday":
@@ -61,13 +62,15 @@ const hoursLookUpHandler = {
         }
       } else {
         //building not in database
-        speechOutput = "I can't find " + userbuildingname + ". Please try again";
+        speechOutput =
+          "I can't find " + userbuildingname + ". Please try again";
       }
     } else {
       speechOutput = "Error. Please try again";
-    }//else error
-    this.emit(":tell", speechOutput);
+    } //else error
+    this.response.speak(speechOutput).listen(reprompt);
+    this.emit(":responseReady");
   }
-}
+};
 
 module.exports = hoursLookUpHandler;

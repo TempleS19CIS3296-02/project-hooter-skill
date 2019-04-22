@@ -16,6 +16,7 @@ const hoursLookUpHandler = require("./handlers/hoursLookUpHandler.js");
 const distanceLookUpHandler = require("./handlers/distanceLookUpHandler.js");
 const eventsLookUpHandler = require("./handlers/eventsLookUpHandler.js");
 const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
+const directionsLookUpHandler = require("./handlers/directionsLookUpHandler.js");
 
 exports.handler = function(event, context, callback) {
   const alexa = Alexa.handler(event, context, callback);
@@ -25,7 +26,8 @@ exports.handler = function(event, context, callback) {
     hoursLookUpHandler,
     distanceLookUpHandler,
     eventsLookUpHandler,
-    canvasToDoHandler
+    canvasToDoHandler,
+    directionsLookUpHandler
   );
   alexa.execute();
 };
