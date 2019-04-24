@@ -4,14 +4,14 @@ const getToDo = require("../canvasUtils/getToDo.js");
 const getCourses = require("../canvasUtils/getCourses.js");
 
 const canvasToDoHandler = {
-  CanvasToDoIntent: async function () {
+  CanvasToDoIntent: async function() {
     var speechOutput = "";
     var toDoResults = "";
     var cardTitle = "Your Canvas To Do List:";
     var cardContent = "card content here";
     var imageObj = {
-      "smallImageUrl": "https://i.imgur.com/0lpxVh6.png", //108x108
-      "largeImageUrl": "https://i.imgur.com/QIq2lcs.png" //240x240
+      smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
+      largeImageUrl: "https://i.imgur.com/QIq2lcs.png" //240x240
     };
 
     try {
@@ -27,7 +27,7 @@ const canvasToDoHandler = {
       // Get courses from Canvas API
       toDoResults = await getCourses
         .getCourses(AUTH_TOKEN)
-        .then(async function (courseMap) {
+        .then(async function(courseMap) {
           try {
             // Get to do list from Canvas API
             return await getToDo.getToDo(AUTH_TOKEN, courseMap).then(out => {
@@ -53,7 +53,6 @@ const canvasToDoHandler = {
 }; // end canvasToDoHandler
 
 module.exports = canvasToDoHandler;
-
 
 // var toDoResults = 'your speech here';
 // var repromptSpeech = 'your re prompt here';
