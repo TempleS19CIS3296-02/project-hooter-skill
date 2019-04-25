@@ -198,8 +198,12 @@ const directionsLookUpHandler = {
             //Call Google Directions API for directions from user origin to user destination
             var directionsData = await getDirections(userOriginAdd, userDestAdd);
             speechOutput += collectAndFormatDirections(directionsData);
-            this.response.speak(speechOutput).listen(REPROMPT);
-            this.emit(":responseReady");
+            //this.response.speak(speechOutput).listen(REPROMPT);
+            //this.emit(":responseReady");
+            //Send a card with written directions to user Alexa app along with narration of directions
+            var cardTitle = "Directions";
+            var cardContent = speechOutput;
+            this.emit(':tellWithCard', speechOutput, cardTitle, cardContent);
         }
     }
 }
