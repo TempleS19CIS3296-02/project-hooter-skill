@@ -160,8 +160,12 @@ const distanceLookUpHandler = {
             //Call Google Distance Matrix API to get distance from user origin to user destination
             var distanceData = await getDistance(userOriginAdd, userDestAdd);
             speechOutput += collectAndFormatDistance(distanceData, speechOrigin, speechDestination);
-            this.response.speak(speechOutput).listen(REPROMPT);
-            this.emit(":responseReady");
+//             this.response.speak(speechOutput).listen(REPROMPT);
+//             this.emit(":responseReady");
+            //Send a card with written directions to user Alexa app along with narration of directions
+            const cardTitle = "Directions";
+            var cardContent = speechOutput;
+            this.emit(':tellWithCard', speechOutput, cardTitle, cardContent);
         }
     }
 }
