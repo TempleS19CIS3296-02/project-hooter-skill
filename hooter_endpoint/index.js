@@ -19,8 +19,6 @@ const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
 const directionsLookUpHandler = require("./handlers/directionsLookUpHandler.js");
 const ttnHeadlinesHandler = require("./handlers/ttnHeadlinesHandler.js");
 
-canvasToDoHandler.CanvasToDoIntent();
-
 exports.handler = function(event, context, callback) {
   const alexa = Alexa.handler(event, context, callback);
   alexa.APP_ID = APP_ID;

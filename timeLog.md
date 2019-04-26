@@ -20,3 +20,6 @@
 ### Richard Kemmerer
   - 2:00 on building information and JSON/DynamoDB code & utterances
   - 4:30 on more building information and more DynamoDB/utterances and powerpoint and trello
+  - 1:00 added presentation slides
+  - 1:00 added new utterances/intents
+  - 1:00 added temple sports, temple events, phillies, and eagles schedules to the google calendar
