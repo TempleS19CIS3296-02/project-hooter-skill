@@ -28,6 +28,7 @@ const defaultHandlers = {
   },
   "AMAZON.StopIntent": function() {
     this.emit(":tell", STOP_MESSAGE);
+    this.emit(":responseReady");
   },
   Unhandled: function() {
     const speechOutput = ERROR_MESSAGE;

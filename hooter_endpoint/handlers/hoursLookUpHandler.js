@@ -64,7 +64,7 @@ const hoursLookUpHandler = {
             speechOutput += JSON.stringify(data.Items[0].hours.friday);
             break;
           case "saturday":
-            speechOutput += JSON.stringify(res.data.Items[0].hours.saturday);
+            speechOutput += JSON.stringify(data.Items[0].hours.saturday);
             break;
         }
       } else {
@@ -74,8 +74,7 @@ const hoursLookUpHandler = {
       }
     } else {
       speechOutput = "Error. Please try again";
-    }
-
+    } //else error
     cardContent = speechOutput;
     this.emit(
       ":askWithCard",
