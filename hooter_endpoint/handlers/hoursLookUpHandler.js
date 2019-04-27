@@ -1,6 +1,13 @@
 "use strict";
 const getBuilding = require("../buildingGet/getBuilding.js");
 const reprompt = "What can I help you with?";
+var cardTitle = "Your upcoming event:";
+var cardContent = "";
+var imageObj = {
+  smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
+  largeImageUrl: "https://i.imgur.com/QIq2lcs.png" //240x240
+};
+
 const hoursLookUpHandler = {
   HoursLookUpIntent: async function() {
     var speechOutput = "";
@@ -57,7 +64,7 @@ const hoursLookUpHandler = {
             speechOutput += JSON.stringify(data.Items[0].hours.friday);
             break;
           case "saturday":
-            speechOutput += JSON.stringify(res.data.Items[0].hours.saturday);
+            speechOutput += JSON.stringify(data.Items[0].hours.saturday);
             break;
         }
       } else {
@@ -68,7 +75,15 @@ const hoursLookUpHandler = {
     } else {
       speechOutput = "Error. Please try again";
     } //else error
-    this.response.speak(speechOutput).listen(reprompt);
+    cardContent = speechOutput;
+    this.emit(
+      ":askWithCard",
+      speechOutput,
+      reprompt,
+      cardTitle,
+      cardContent,
+      imageObj
+    );
     this.emit(":responseReady");
   }
 };

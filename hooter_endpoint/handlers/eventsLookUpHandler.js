@@ -80,16 +80,16 @@ const eventsLookUpHandler = {
           speechOutput +=
             "I can't find the event " + eventname + ". Please try again!";
         }
-        cardContent += speechOutput;
+        cardContent = speechOutput;
         this.emit(
-          ":tellWithCard",
+          ":askWithCard",
           speechOutput,
+          reprompt,
           cardTitle,
           cardContent,
           imageObj
         );
-        this.response.shouldEndSession = false;
-        this.response.listen();
+        this.emit(":responseReady");
       }
     );
   }
