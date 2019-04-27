@@ -17,7 +17,7 @@ const distanceLookUpHandler = require("./handlers/distanceLookUpHandler.js");
 const eventsLookUpHandler = require("./handlers/eventsLookUpHandler.js");
 const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
 const directionsLookUpHandler = require("./handlers/directionsLookUpHandler.js");
-const ttnHeadlinesHandler = require("./handlers/ttnHeadlinesHandler.js");
+const tuHeadlinesHandler = require("./handlers/tuHeadlinesHandler.js");
 
 canvasToDoHandler.CanvasToDoIntent();
 
@@ -31,7 +31,7 @@ exports.handler = function (event, context, callback) {
     eventsLookUpHandler,
     canvasToDoHandler,
     directionsLookUpHandler,
-    ttnHeadlinesHandler
+    tuHeadlinesHandler
   );
   alexa.execute();
 };
