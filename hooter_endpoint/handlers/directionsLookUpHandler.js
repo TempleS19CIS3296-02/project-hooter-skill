@@ -14,6 +14,11 @@ const REPLACE_FT = " feet";
 const SEARCH_MI = " mi";
 const REPLACE_MI = " miles";
 const REPROMPT = "What can I help you with?";
+const CARD_TITLE = "Directions";
+const IMAGE_OBJ = {
+    smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
+    largeImageUrl: "https://i.imgur.com/QIq2lcs.png" //240x240
+};
 
 //Function to convert html formatted text string into plain text readable by Alexa
 String.prototype.replaceAll = function(search, replacement) {
@@ -57,7 +62,7 @@ function collectAndFormatDirections(directionsData){
     //Run from second until penultimate step so we can keep adding filler words between each direction instruction
     var i = 1;
     for(i = 1; i < directionsData.routes[0].legs[0].steps.length-1; i++){
-        speechOutput += " Then ";
+        speechOutput += "\nThen ";
         var htmlString = directionsData.routes[0].legs[0].steps[i].html_instructions;
         speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
         //If next direction instruction is 0 miles away, no need to tell user to "continue on" for 0 miles in the current instruction
@@ -68,7 +73,7 @@ function collectAndFormatDirections(directionsData){
         }
     }
     //Last step does not have "continue on"
-    speechOutput += " Then ";
+    speechOutput += "\nThen ";
     var htmlString = directionsData.routes[0].legs[0].steps[i].html_instructions;
     speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
     speechOutput += " in ";
@@ -201,9 +206,8 @@ const directionsLookUpHandler = {
             //this.response.speak(speechOutput).listen(REPROMPT);
             //this.emit(":responseReady");
             //Send a card with written directions to user Alexa app along with narration of directions
-            const cardTitle = "Directions";
             var cardContent = speechOutput;
-            this.emit(':tellWithCard', speechOutput, cardTitle, cardContent);
+            this.emit(':askWithCard', speechOutput, REPROMPT, CARD_TITLE, cardContent, IMAGE_OBJ);
         }
     }
 }

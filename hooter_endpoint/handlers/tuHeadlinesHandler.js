@@ -2,7 +2,11 @@
 let Parser = require('rss-parser');
 let parser = new Parser();
 const REPROMPT = "What can I help you with?";
-
+const IMAGE_OBJ = {
+  smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
+  largeImageUrl: "https://i.imgur.com/QIq2lcs.png" //240x240
+};
+const CARD_TITLE = "News";
 //Dictionary of news types and the URLs for their RSS feeds
 const newsTypes = {
   artsAndCulture : "https://news.temple.edu/rss/news/topics/arts-culture",
@@ -18,13 +22,14 @@ const newsTypes = {
 };
 //Function to get extract headlines from retrieved RSS feed and format speech output
 function getHeadlines(feed, userChoice){
-  var speechOutput = "Here are headlines from Temple University about " + userChoice 
-  + " <audio src='soundbank://soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_neutral_response_03'/> ";
+  var speechOutput = "Here are headlines from Temple University about " + userChoice + ":" 
+  + " <audio src='soundbank://soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_neutral_response_03'/> "
+  + "\n";
   feed.items.forEach(item => {
-    speechOutput += item.title + ". ";
+    speechOutput += item.title + ".\n";
   });
-  speechOutput += "<audio src='soundbank://soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_neutral_response_03'/> That's all for " 
-  + userChoice + " headlines.";
+  speechOutput += "<audio src='soundbank://soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_neutral_response_03'/>" 
+  + "That's all for " + userChoice + " headlines.";
   speechOutput = speechOutput.replace(/-/g," ").replace(/&/g,"");
   return speechOutput;
 };
@@ -71,8 +76,10 @@ const tuHeadlinesHandler = {
       //Get RSS feed from user specified RSS feed
       let feed = await parser.parseURL(userFeed);
       speechOutput = getHeadlines(feed, userChoice);
-      this.response.speak(speechOutput).listen(REPROMPT);
-      this.emit(":responseReady");
+      //this.response.speak(speechOutput).listen(REPROMPT);
+      //this.emit(":responseReady");
+      var cardContent = speechOutput.replace(/<.*?>/g, "");
+      this.emit(':askWithCard', speechOutput, REPROMPT, CARD_TITLE, cardContent, IMAGE_OBJ);
   }
 }
 

@@ -190,9 +190,36 @@ const distanceLookUpHandler = {
             } 
             //Call Google Distance Matrix API to get distance from user origin to user destination
             var distanceData = await getDistance(userOriginAdd, userDestAdd);
-            speechOutput += collectAndFormatDistance(distanceData, speechOrigin, speechDestination);
-            this.response.speak(speechOutput).listen(REPROMPT);
-            this.emit(":responseReady");
+            //Destination and origin addresses are both valid
+            if((distanceData.destination_addresses[0] != "") && (distanceData.origin_addresses[0] != "")){
+                //Send response for distance request
+                speechOutput += collectAndFormatDistance(distanceData, speechOrigin, speechDestination);
+                this.response.speak(speechOutput).listen(REPROMPT);
+                this.emit(":responseReady");
+            } else {
+            //Destination and/or origin address(es) are invalid
+                var invalidAddressPoint = "";
+                var correctionAddressPoint = "";
+                //Destination and origin addresses are invalid
+                if ((distanceData.destination_addresses[0] == "") && (distanceData.origin_addresses[0] == "")){
+                    invalidAddressPoint = "destination nor origin";
+                    correctionAddressPoint = "destination and origin";
+                } else if(distanceData.destination_addresses[0] == ""){
+                //Destination address is invalid
+                    invalidAddressPoint = "destination";
+                    correctionAddressPoint = invalidAddressPoint;
+                } else {
+                //Origin address is invalid
+                    invalidAddressPoint = "origin";
+                    correctionAddressPoint = invalidAddressPoint;
+                }
+                //Tell user the error they made and how to fix it
+                speechOutput = "I'm sorry, that is not a valid " 
+                + invalidAddressPoint + " address. " + "Please enter a valid " 
+                + correctionAddressPoint + " address or building name, and try again.";
+                this.response.speak(speechOutput).listen(REPROMPT);
+                this.emit(":responseReady");
+            }       
         }
     }
 }
