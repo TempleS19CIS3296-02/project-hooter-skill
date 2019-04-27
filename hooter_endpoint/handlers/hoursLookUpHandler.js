@@ -57,9 +57,9 @@ const hoursLookUpHandler = {
             speechOutput += JSON.stringify(data.Items[0].hours.friday);
             break;
           case "saturday":
-            speechOutput += JSON.stringify(res.data.Items[0].hours.saturday);
+            speechOutput += JSON.stringify(data.Items[0].hours.saturday);
             break;
-        }
+        } 
       } else {
         //building not in database
         speechOutput =
