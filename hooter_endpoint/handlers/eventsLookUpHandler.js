@@ -2,8 +2,13 @@
 var { google } = require("googleapis");
 var key = require("../HooterSkill-5fde0850cf41.json"); // private json
 const reprompt = "What can I help you with?";
-
 var AmazonSpeech = require("ssml-builder/amazon_speech");
+var cardTitle = "Your upcoming event:";
+var cardContent = "";
+var imageObj = {
+  smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
+  largeImageUrl: "https://i.imgur.com/QIq2lcs.png" //240x240
+};
 
 const eventsLookUpHandler = {
   EventsLookUpIntent: async function() {
@@ -75,8 +80,15 @@ const eventsLookUpHandler = {
           speechOutput +=
             "I can't find the event " + eventname + ". Please try again!";
         }
-        this.response.speak(speechOutput).listen(reprompt);
-        this.emit(":responseReady");
+        cardContent = speechOutput;
+        this.emit(
+          ":askWithCard",
+          speechOutput,
+          reprompt,
+          cardTitle,
+          cardContent,
+          imageObj
+        );
       }
     );
   }
