@@ -25,6 +25,7 @@ function getHeadlines(feed, userChoice){
   });
   speechOutput += "<audio src='soundbank://soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_neutral_response_03'/> That's all for " 
   + userChoice + " headlines.";
+  speechOutput = speechOutput.replace(/-/g," ").replace(/&/g,"");
   return speechOutput;
 };
 
