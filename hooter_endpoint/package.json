@@ -12,8 +12,10 @@
     "googleapis": "^39.2.0",
     "i18next": "^11.10.2",
     "i18next-sprintf-postprocessor": "^0.2.2",
+    "jQuery": "^1.7.4",
     "moment": "^2.24.0",
-    "ssml-builder": "^0.4.3"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   },
   "devDependencies": {},
   "scripts": {
