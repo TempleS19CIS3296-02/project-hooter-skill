@@ -20,34 +20,37 @@ const canvasToDoHandler = {
 
       if (AUTH_TOKEN === undefined || AUTH_TOKEN === "") {
         toDoResults = "Unable to retrieve a valid access token.";
-        this.emit(":tell", toDoResults);
-        return;
+        // this.emit(":tell", toDoResults);
+      } else {
+        // Get courses from Canvas API
+        toDoResults = await getCourses
+          .getCourses(AUTH_TOKEN)
+          .then(async function (courseMap) {
+            try {
+              // Get to do list from Canvas API
+              return await getToDo.getToDo(AUTH_TOKEN, courseMap).then(out => {
+                return out;
+              });
+            } catch (error) {
+              console.error(error);
+              toDoResults = "An error occured";
+              // this.emit(":tell", "An error occured");
+            }
+          });
       }
 
-      // Get courses from Canvas API
-      toDoResults = await getCourses
-        .getCourses(AUTH_TOKEN)
-        .then(async function (courseMap) {
-          try {
-            // Get to do list from Canvas API
-            return await getToDo.getToDo(AUTH_TOKEN, courseMap).then(out => {
-              return out;
-            });
-          } catch (error) {
-            console.error(error);
-            this.emit(":tell", "An error occured");
-          }
-        });
     } catch (error) {
       console.error(error);
-      this.emit(":tell", "An error occured");
+      toDoResults = "An error occured";
+      // this.emit(":tell", "An error occured");
     }
 
+
     // Output speech formatted to do list
-    // this.emit(":tell", toDoResults);
     cardContent = toDoResults;
     speechOutput = cardTitle + toDoResults;
     this.emit(":tellWithCard", speechOutput, cardTitle, cardContent, imageObj);
+    this.emit(":responseReady");
     // console.log(toDoResults);
   } //end CanvasToDoIntent()
 }; // end canvasToDoHandler
