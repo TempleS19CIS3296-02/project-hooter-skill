@@ -23,4 +23,4 @@
   - 1:00 added presentation slides
   - 1:00 added new utterances/intents
   - 1:00 added temple sports, temple events, phillies, and eagles schedules to the google calendar
-  - 1:30 testing different utterances and inputs
+  - 3:30 testing different utterances and inputs for all intents and buildings
