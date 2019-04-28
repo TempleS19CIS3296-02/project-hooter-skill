@@ -39,7 +39,7 @@ const tuHeadlinesHandler = {
     "TuHeadlinesIntent": async function() {
       var speechOutput = "";
       var userFeed = "";
-      var userChoice = userChoice = this.event.request.intent.slots.newsType.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+      var userChoice = this.event.request.intent.slots.newsType.resolutions.resolutionsPerAuthority[0].values[0].value.name;
       //Switch statement to get RSS feed URL for user choice of news type
       switch(userChoice){
         case "arts and culture":
