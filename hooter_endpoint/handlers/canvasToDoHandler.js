@@ -4,7 +4,7 @@ const getToDo = require("../canvasUtils/getToDo.js");
 const getCourses = require("../canvasUtils/getCourses.js");
 
 const canvasToDoHandler = {
-  CanvasToDoIntent: async function() {
+  CanvasToDoIntent: async function () {
     var speechOutput = "";
     var toDoResults = "";
     var cardTitle = "Your Canvas To Do List:";
@@ -18,10 +18,13 @@ const canvasToDoHandler = {
       // Read manually generated access token from local file
       const AUTH_TOKEN = getAccessToken.getAccessToken();
 
+      // Missing or invalid access token
       if (AUTH_TOKEN === undefined || AUTH_TOKEN === "") {
-        toDoResults = "Unable to retrieve a valid access token.";
+        toDoResults = "This functionality is current unavailable.";
+        // toDoResults = "Unable to retrieve a valid access token.";
         // this.emit(":tell", toDoResults);
-      } else {
+      }
+      else {
         // Get courses from Canvas API
         toDoResults = await getCourses
           .getCourses(AUTH_TOKEN)
@@ -33,7 +36,7 @@ const canvasToDoHandler = {
               });
             } catch (error) {
               console.error(error);
-              toDoResults = "An error occured";
+              toDoResults = "An error occured.";
               // this.emit(":tell", "An error occured");
             }
           });
@@ -41,7 +44,7 @@ const canvasToDoHandler = {
 
     } catch (error) {
       console.error(error);
-      toDoResults = "An error occured";
+      toDoResults = "An error occured.";
       // this.emit(":tell", "An error occured");
     }
 

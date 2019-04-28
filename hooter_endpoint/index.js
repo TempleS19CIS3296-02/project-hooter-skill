@@ -18,8 +18,6 @@ const eventsLookUpHandler = require("./handlers/eventsLookUpHandler.js");
 const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
 const directionsLookUpHandler = require("./handlers/directionsLookUpHandler.js");
 
-// canvasToDoHandler.CanvasToDoIntent();
-
 exports.handler = function(event, context, callback) {
   const alexa = Alexa.handler(event, context, callback);
   alexa.APP_ID = APP_ID;
