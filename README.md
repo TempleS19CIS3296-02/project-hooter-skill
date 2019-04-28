@@ -33,19 +33,19 @@ The Software Development Process that we are using is plan driven. We are not te
 # Hooter Skill
 Hooter skill has several different intents. Distance, directions, hours, events, and news. Each of these intents help run the skill. To use Hooter skill simply say, "Open Hooter Skill" or "ask hooter skil...". 
 
-# Directions
+# Directions Intent
 Hooter can be used as a GPS! He can give you specific step by step instructions on how to get to any building on campus from your location or another building on campus. Simply ask Hooter, "how do I get to {building}".
 
-# Distance
+# Distance Intent
 You can ask Hooter, "how far is {building} from me" or "how many minutes away is {building} from me. Hooter will respond with the minutes away a building is from your location or another location.
 
-# Event Lookup
+# Event Lookup Intent
 Hooter has access to several different calendars. Hooter has access to the academic calendar, the Temple athletics calendar, and the Phillies and Eagles' calendars. You can ask Hooter something like "what are the upcoming events" or "events on {day}". Hooter will respond with 1-5 events and when they are occurring and how many days are remaining until the event. 
 
-# Hours Lookup
+# Hours Lookup Intent
 Hooter has access to the hours that each building is open and closed on each day of the week. You can ask Hooter if a building is open on a certain day or for the hours of a building.
 
-# News 
+# News Intent
 Hooter has access to Temple News Headlines. You can access them by saying "what are today's headlines" or "what's new in {newsType}". Different news types include, the arts, athletics, staff, community, and more. Hooter only has access to Temple news related things.
 
 # Individual Contributions
