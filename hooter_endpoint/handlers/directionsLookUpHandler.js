@@ -177,8 +177,16 @@ const directionsLookUpHandler = {
                 } else {
                 //Case: User device cannot share location
                     //Use Alexa Devices API to get device address
+                    const devicePermissionSpecs = "alexa::devices:all:geolocation:read";
+                    //User has not given permission for location yet
+                    if (this.event.context.System.user.permissions.scopes[devicePermissionSpecs].status == "DENIED"){
+                        //Get user to give permission to get their device location
+                        this.response.speak('Hooter would like to use your device address. Hooter requires both the Device Address and Location Services boxes to be checked in the permissions card. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.');
+                        const permissions = ['read::alexa:device:all:address'];
+                        this.response.askForPermissionsConsentCard(permissions);
+                        this.emit(':responseReady');
+                    } else {
                     //If user has given permission for location
-                    if (this.event.context.System.user.permissions) {
                         const token = this.event.context.System.user.permissions.consentToken;
                         const apiEndpoint = this.event.context.System.apiEndpoint;
                         const deviceId = this.event.context.System.device.deviceId;
@@ -191,27 +199,14 @@ const directionsLookUpHandler = {
                         } else {
                             userOriginAdd = collectAndFormatUserDeviceAdd(deviceAddData);
                         } 
-                    } else { //User has not given permission for location yet
-                        //Get user to give permission to get their device location
-                        this.response.speak('Hooter would like to use your device address. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.');
-                        const permissions = ['read::alexa:device:all:address'];
-                        this.response.askForPermissionsConsentCard(permissions);
-                        this.emit(':responseReady');
                     }
                 }
             }
             //Call Google Directions API for directions from user origin to user destination
             var directionsData = await getDirections(userOriginAdd, userDestAdd);
-            //Check directions data to see if user specified any invalid addresses
-            var invalidAddress = false;
-            var i = 0;
-            for (i = 0; i < directionsData.geocoded_waypoints.length; i++) { 
-                if(directionsData.geocoded_waypoints[i].geocoder_status == "ZERO_RESULTS"){
-                    invalidAddress = true;
-                }
-            }
-            if(invalidAddress){
-            //Destination and/or origin address(es) are invalid
+            //User specified invalid destination and/or origin address(es)
+            if((directionsData.geocoded_waypoints[0].geocoder_status == "ZERO_RESULTS") 
+                || (directionsData.geocoded_waypoints[1].geocoder_status == "ZERO_RESULTS")){
                 var invalidAddressPoint = "";
                 var correctionAddressPoint = "";
                 //Destination and origin addresses are invalid
@@ -237,8 +232,6 @@ const directionsLookUpHandler = {
             } else {
             //Send response for directions request
                 speechOutput += collectAndFormatDirections(directionsData);
-                //this.response.speak(speechOutput).listen(REPROMPT);
-                //this.emit(":responseReady");
                 //Send a card with written directions to user Alexa app along with narration of directions
                 var cardContent = speechOutput;
                 this.emit(':askWithCard', speechOutput, REPROMPT, CARD_TITLE, cardContent, IMAGE_OBJ);

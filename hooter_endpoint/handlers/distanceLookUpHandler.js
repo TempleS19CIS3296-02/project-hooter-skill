@@ -164,8 +164,15 @@ const distanceLookUpHandler = {
                 } else {
                 //Case: User device cannot share location eg. stationary Alexa device - Echo
                     //Use Alexa Devices API to get device address
-                    //If user has given permission for location
-                    if (this.event.context.System.user.permissions) {
+                    const devicePermissionSpecs = "alexa::devices:all:geolocation:read";
+                    //User has not given permission for location yet
+                    if(this.event.context.System.user.permissions.scopes[devicePermissionSpecs].status == "DENIED"){
+                        //Get user to give permission to get their device location
+                        this.response.speak('Hooter would like to use your device address. Hooter requires both the Device Address and Location Services boxes to be checked in the permissions card. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.');
+                        const permissions = ['read::alexa:device:all:address'];
+                        this.response.askForPermissionsConsentCard(permissions);
+                        this.emit(':responseReady');
+                    } else {
                         const token = this.event.context.System.user.permissions.consentToken;
                         const apiEndpoint = this.event.context.System.apiEndpoint;
                         const deviceId = this.event.context.System.device.deviceId;
@@ -178,14 +185,8 @@ const distanceLookUpHandler = {
                         } else {
                             userOriginAdd = collectAndFormatUserDeviceAdd(deviceAddData);
                             speechOrigin = userOriginAdd;
-                        } 
-                    } else { //User has not given permission for location yet
-                        //Get user to give permission to get their device location
-                        this.response.speak('Hooter would like to use your device address. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.');
-                        const permissions = ['read::alexa:device:all:address'];
-                        this.response.askForPermissionsConsentCard(permissions);
-                        this.emit(':responseReady');
-                    }      
+                        }
+                    }   
                 }
             } 
             //Call Google Distance Matrix API to get distance from user origin to user destination
