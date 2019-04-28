@@ -3,6 +3,7 @@
 ### Group
   - 6:00 initial planning
   - 1:30 course lab 4/1
+  - 1:00 group presentation prep
   - 2:00 final demo and testing prep
   
 ### Viet Pham
