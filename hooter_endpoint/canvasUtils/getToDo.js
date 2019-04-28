@@ -4,33 +4,23 @@
     This http request is a GET to Canvas's 'To do' list for a user.
 */
 
-// const getAccessToken = require("./getAccessToken.js");
-// const AUTH_TOKEN = getAccessToken();
-
 const axios = require("axios");
 const moment = require("moment");
-// axios.defaults.baseURL = "https://templeu.instructure.com/api/v1";
-// axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-// axios.defaults.headers.common = { Authorization: `bearer ${AUTH_TOKEN}` };
 
 exports.getToDo = function (AUTH_TOKEN, map) {
-  // const url = "https://templeu.instructure.com/api/v1/users/self/todo"; //Canvas API url
   let response = ""; //http response
-  // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
   try {
     // Make the request for the authorized user's to do list
-    return response = axios({
+    return (response = axios({
       method: "get",
       url: "https://templeu.instructure.com/api/v1/users/self/todo?per_page=20",
-      // url: "/users/self/todo",
       headers: { Authorization: `Bearer ${AUTH_TOKEN}` }
-    })
-      .then(function (response) {
-        //handle success
-        console.log("todo request success");
-        // console.log(response.data);
-        return buildTodoListSpeech(response.data, map);
-      });
+    }).then(function (response) {
+      //handle success
+      console.log("todo request success");
+      console.log(response.data);
+      return buildTodoListSpeech(response.data, map);
+    }));
   } catch (error) {
     console.error(error);
   }
@@ -38,16 +28,17 @@ exports.getToDo = function (AUTH_TOKEN, map) {
   return response;
 };
 
+// Returns a formatted string version of API response
 function buildTodoListSpeech(toDoList, map) {
-
-  if (toDoList === "") {
-    return "You're all caught up!";
+  if (toDoList.length === 0) {
+    return "Nothing for now";
   }
 
   toDoList.sort(compareDate);
-  var speechText = "Your Canvas to do list is: ";
+  var speechText = "";
   for (let i = 0; i < toDoList.length; i++) {
-    speechText += ("\n\t" + getToDoListItem(toDoList[i], map.get(toDoList[i].course_id)));
+    speechText +=
+      "\n\t" + getToDoListItem(toDoList[i], map.get(toDoList[i].course_id));
   }
 
   speechText = speechText.replace("&", "and");
@@ -55,24 +46,14 @@ function buildTodoListSpeech(toDoList, map) {
   return speechText;
 }
 
+// Returns a formatted string version of a to do assignment
 function getToDoListItem(item, course_name) {
-
   let dueDate = item.assignment.due_at;
   let assignment = item.assignment.name;
-  dueDate = moment(item.assignment.due_at).format('MMMM Do [at] hh:mm A');
-
-  // //format for console testing
-  // var str =
-  //   "\n" + course_name + ": " +
-  //   item.assignment.name +
-  //   "\n\tdue date: " +
-  //   dueDate;
+  dueDate = moment(item.assignment.due_at).format("MMMM Do [at] hh:mm A");
 
   //format for Alexa output
-  var str = course_name + ": " +
-    assignment +
-    " due date: " + dueDate + ". ";
-
+  var str = course_name + ": " + assignment + " due date: " + dueDate + ". ";
 
   return str;
 }
