@@ -14,6 +14,11 @@ const REPLACE_FT = " feet";
 const SEARCH_MI = " mi";
 const REPLACE_MI = " miles";
 const REPROMPT = "What can I help you with?";
+const CARD_TITLE = "Directions";
+const IMAGE_OBJ = {
+    smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
+    largeImageUrl: "https://i.imgur.com/QIq2lcs.png" //240x240
+};
 
 //Function to convert html formatted text string into plain text readable by Alexa
 String.prototype.replaceAll = function(search, replacement) {
@@ -57,7 +62,7 @@ function collectAndFormatDirections(directionsData){
     //Run from second until penultimate step so we can keep adding filler words between each direction instruction
     var i = 1;
     for(i = 1; i < directionsData.routes[0].legs[0].steps.length-1; i++){
-        speechOutput += " Then ";
+        speechOutput += "\nThen ";
         var htmlString = directionsData.routes[0].legs[0].steps[i].html_instructions;
         speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
         //If next direction instruction is 0 miles away, no need to tell user to "continue on" for 0 miles in the current instruction
@@ -68,7 +73,7 @@ function collectAndFormatDirections(directionsData){
         }
     }
     //Last step does not have "continue on"
-    speechOutput += " Then ";
+    speechOutput += "\nThen ";
     var htmlString = directionsData.routes[0].legs[0].steps[i].html_instructions;
     speechOutput += htmlString.replaceAll(SEARCH, REPLACE);
     speechOutput += " in ";
@@ -172,8 +177,16 @@ const directionsLookUpHandler = {
                 } else {
                 //Case: User device cannot share location
                     //Use Alexa Devices API to get device address
+                    const devicePermissionSpecs = "alexa::devices:all:geolocation:read";
+                    //User has not given permission for location yet
+                    if (this.event.context.System.user.permissions.scopes[devicePermissionSpecs].status == "DENIED"){
+                        //Get user to give permission to get their device location
+                        this.response.speak('Hooter would like to use your device address. Hooter requires both the Device Address and Location Services boxes to be checked in the permissions card. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.');
+                        const permissions = ['read::alexa:device:all:address'];
+                        this.response.askForPermissionsConsentCard(permissions);
+                        this.emit(':responseReady');
+                    } else {
                     //If user has given permission for location
-                    if (this.event.context.System.user.permissions) {
                         const token = this.event.context.System.user.permissions.consentToken;
                         const apiEndpoint = this.event.context.System.apiEndpoint;
                         const deviceId = this.event.context.System.device.deviceId;
@@ -186,24 +199,43 @@ const directionsLookUpHandler = {
                         } else {
                             userOriginAdd = collectAndFormatUserDeviceAdd(deviceAddData);
                         } 
-                    } else { //User has not given permission for location yet
-                        //Get user to give permission to get their device location
-                        this.response.speak('Hooter would like to use your device address. To turn on location sharing, please go to your Alexa app, and follow the instructions. Then please try again.');
-                        const permissions = ['read::alexa:device:all:address'];
-                        this.response.askForPermissionsConsentCard(permissions);
-                        this.emit(':responseReady');
                     }
                 }
             }
             //Call Google Directions API for directions from user origin to user destination
             var directionsData = await getDirections(userOriginAdd, userDestAdd);
-            speechOutput += collectAndFormatDirections(directionsData);
-            //this.response.speak(speechOutput).listen(REPROMPT);
-            //this.emit(":responseReady");
-            //Send a card with written directions to user Alexa app along with narration of directions
-            const cardTitle = "Directions";
-            var cardContent = speechOutput;
-            this.emit(':tellWithCard', speechOutput, cardTitle, cardContent);
+            //User specified invalid destination and/or origin address(es)
+            if((directionsData.geocoded_waypoints[0].geocoder_status == "ZERO_RESULTS") 
+                || (directionsData.geocoded_waypoints[1].geocoder_status == "ZERO_RESULTS")){
+                var invalidAddressPoint = "";
+                var correctionAddressPoint = "";
+                //Destination and origin addresses are invalid
+                if((directionsData.geocoded_waypoints[0].geocoder_status == "ZERO_RESULTS") 
+                    && (directionsData.geocoded_waypoints[1].geocoder_status == "ZERO_RESULTS")){
+                        invalidAddressPoint = "destination nor origin";
+                        correctionAddressPoint = "destination and origin";
+                } else if ((directionsData.geocoded_waypoints[0].geocoder_status == "ZERO_RESULTS")) {
+                //Origin address is invalid
+                    invalidAddressPoint = "origin";
+                    correctionAddressPoint = invalidAddressPoint;
+                } else if(directionsData.geocoded_waypoints[1].geocoder_status == "ZERO_RESULTS"){
+                //Destination address is invalid
+                    invalidAddressPoint = "destination";
+                    correctionAddressPoint = invalidAddressPoint;
+                }
+                //Tell user the error they made and how to fix it
+                speechOutput = "I'm sorry, that is not a valid " 
+                + invalidAddressPoint + " address. " + "Please specify a valid " 
+                + correctionAddressPoint + " address or building name, and try again.";
+                this.response.speak(speechOutput).listen(REPROMPT);
+                this.emit(":responseReady");
+            } else {
+            //Send response for directions request
+                speechOutput += collectAndFormatDirections(directionsData);
+                //Send a card with written directions to user Alexa app along with narration of directions
+                var cardContent = speechOutput;
+                this.emit(':askWithCard', speechOutput, REPROMPT, CARD_TITLE, cardContent, IMAGE_OBJ);
+            }
         }
     }
 }
