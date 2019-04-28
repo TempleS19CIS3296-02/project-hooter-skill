@@ -1,7 +1,7 @@
 "use strict";
 const getBuilding = require("../buildingGet/getBuilding.js");
 const reprompt = "What can I help you with?";
-var cardTitle = "Your upcoming event:";
+var cardTitle = "Temple Building Hours:";
 var cardContent = "";
 var imageObj = {
   smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108

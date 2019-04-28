@@ -15,8 +15,9 @@ const defaultHandlers = require("./handlers/defaultHandlers.js");
 const hoursLookUpHandler = require("./handlers/hoursLookUpHandler.js");
 //const distanceLookUpHandler = require("./handlers/distanceLookUpHandler.js");
 const eventsLookUpHandler = require("./handlers/eventsLookUpHandler.js");
-//const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
-//const directionsLookUpHandler = require("./handlers/directionsLookUpHandler.js");
+const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
+const directionsLookUpHandler = require("./handlers/directionsLookUpHandler.js");
+const tuHeadlinesHandler = require("./handlers/tuHeadlinesHandler.js");
 
 canvasToDoHandler.CanvasToDoIntent();
 
@@ -26,10 +27,11 @@ exports.handler = function(event, context, callback) {
   alexa.registerHandlers(
     defaultHandlers,
     hoursLookUpHandler,
-    //distanceLookUpHandler,
-    eventsLookUpHandler
-    //canvasToDoHandler,
-    //directionsLookUpHandler
+    distanceLookUpHandler,
+    eventsLookUpHandler,
+    canvasToDoHandler,
+    directionsLookUpHandler,
+    tuHeadlinesHandler
   );
   alexa.execute();
 };

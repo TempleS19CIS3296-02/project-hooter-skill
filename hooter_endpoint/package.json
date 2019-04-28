@@ -1,0 +1,27 @@
+{
+  "name": "hooter_endpoint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "alexa-sdk": "^1.0.25",
+    "ask-sdk-core": "^2.5.1",
+    "ask-sdk-model": "^1.15.0",
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.3",
+    "googleapis": "^39.2.0",
+    "i18next": "^11.10.2",
+    "i18next-sprintf-postprocessor": "^0.2.2",
+    "jQuery": "^1.7.4",
+    "moment": "^2.24.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
