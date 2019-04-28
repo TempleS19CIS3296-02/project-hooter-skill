@@ -3,6 +3,7 @@ const getAccessToken = require("../canvasUtils/getAccessToken.js");
 const getToDo = require("../canvasUtils/getToDo.js");
 const getCourses = require("../canvasUtils/getCourses.js");
 
+// obtains a to do list from Canvas LMS API and outs as Alexa response
 const canvasToDoHandler = {
   CanvasToDoIntent: async function () {
     var speechOutput = "";
@@ -41,31 +42,18 @@ const canvasToDoHandler = {
             }
           });
       }
-
     } catch (error) {
       console.error(error);
       toDoResults = "An error occured.";
       // this.emit(":tell", "An error occured");
     }
 
-
-    // Output speech formatted to do list
+    // Output speech formatted to do list with card
     cardContent = toDoResults;
     speechOutput = cardTitle + toDoResults;
     this.emit(":tellWithCard", speechOutput, cardTitle, cardContent, imageObj);
     this.emit(":responseReady");
-    // console.log(toDoResults);
   } //end CanvasToDoIntent()
 }; // end canvasToDoHandler
 
 module.exports = canvasToDoHandler;
-
-// var toDoResults = 'your speech here';
-// var repromptSpeech = 'your re prompt here';
-// var cardTitle = 'card title here';
-// var cardContent = 'card content here';
-// var imageObj = {
-//    "smallImageUrl": "https://carfu.com/resources/card-images/race-car-small.png",
-//    "largeImageUrl": "https://carfu.com/resources/card-images/race-car-large.png"
-// };
-// this.emit(':askWithCard', toDoResults, repromptSpeech, cardTitle, cardContent, imageObj);

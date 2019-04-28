@@ -1,22 +1,20 @@
 const axios = require("axios");
 
+// Obtains a list of courses enrolled by the user from Canvas LMS API
 exports.getCourses = function (AUTH_TOKEN) {
     // async function getCourses(AUTH_TOKEN) {
 
     let response = ""; //http response
-    let courseMap = new Map();
     try {
         // Make the request for the authorized user's to do list
         return response = axios({
             method: "get",
             url: "https://templeu.instructure.com/api/v1/users/self/courses?per_page=100",
-            // url: "https://templeu.instructure.com/api/v1/courses",
             headers: { Authorization: `Bearer ${AUTH_TOKEN}`, },
         })
             .then(function (response) {
                 //handle success
                 console.log("courses request success");
-                // console.log(response.data);
                 return buildCourseMap(response.data);
             });
 
