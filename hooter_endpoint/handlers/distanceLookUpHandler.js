@@ -215,7 +215,7 @@ const distanceLookUpHandler = {
                 }
                 //Tell user the error they made and how to fix it
                 speechOutput = "I'm sorry, that is not a valid " 
-                + invalidAddressPoint + " address. " + "Please enter a valid " 
+                + invalidAddressPoint + " address. " + "Please specify a valid " 
                 + correctionAddressPoint + " address or building name, and try again.";
                 this.response.speak(speechOutput).listen(REPROMPT);
                 this.emit(":responseReady");

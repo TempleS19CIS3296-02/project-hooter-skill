@@ -202,12 +202,47 @@ const directionsLookUpHandler = {
             }
             //Call Google Directions API for directions from user origin to user destination
             var directionsData = await getDirections(userOriginAdd, userDestAdd);
-            speechOutput += collectAndFormatDirections(directionsData);
-            //this.response.speak(speechOutput).listen(REPROMPT);
-            //this.emit(":responseReady");
-            //Send a card with written directions to user Alexa app along with narration of directions
-            var cardContent = speechOutput;
-            this.emit(':askWithCard', speechOutput, REPROMPT, CARD_TITLE, cardContent, IMAGE_OBJ);
+            //Check directions data to see if user specified any invalid addresses
+            var invalidAddress = false;
+            var i = 0;
+            for (i = 0; i < directionsData.geocoded_waypoints.length; i++) { 
+                if(directionsData.geocoded_waypoints[i].geocoder_status == "ZERO_RESULTS"){
+                    invalidAddress = true;
+                }
+            }
+            if(invalidAddress){
+            //Destination and/or origin address(es) are invalid
+                var invalidAddressPoint = "";
+                var correctionAddressPoint = "";
+                //Destination and origin addresses are invalid
+                if((directionsData.geocoded_waypoints[0].geocoder_status == "ZERO_RESULTS") 
+                    && (directionsData.geocoded_waypoints[1].geocoder_status == "ZERO_RESULTS")){
+                        invalidAddressPoint = "destination nor origin";
+                        correctionAddressPoint = "destination and origin";
+                } else if ((directionsData.geocoded_waypoints[0].geocoder_status == "ZERO_RESULTS")) {
+                //Origin address is invalid
+                    invalidAddressPoint = "origin";
+                    correctionAddressPoint = invalidAddressPoint;
+                } else if(directionsData.geocoded_waypoints[1].geocoder_status == "ZERO_RESULTS"){
+                //Destination address is invalid
+                    invalidAddressPoint = "destination";
+                    correctionAddressPoint = invalidAddressPoint;
+                }
+                //Tell user the error they made and how to fix it
+                speechOutput = "I'm sorry, that is not a valid " 
+                + invalidAddressPoint + " address. " + "Please specify a valid " 
+                + correctionAddressPoint + " address or building name, and try again.";
+                this.response.speak(speechOutput).listen(REPROMPT);
+                this.emit(":responseReady");
+            } else {
+            //Send response for directions request
+                speechOutput += collectAndFormatDirections(directionsData);
+                //this.response.speak(speechOutput).listen(REPROMPT);
+                //this.emit(":responseReady");
+                //Send a card with written directions to user Alexa app along with narration of directions
+                var cardContent = speechOutput;
+                this.emit(':askWithCard', speechOutput, REPROMPT, CARD_TITLE, cardContent, IMAGE_OBJ);
+            }
         }
     }
 }
