@@ -25,7 +25,15 @@ const hoursLookUpHandler = {
     //==============================================
     //API Call to user input building
     //---------------------SLOT VALUES HANDLE BEGINS----------------------------------------
-    var userbuildingname = this.event.request.intent.slots.buildingname.value.toLowerCase();
+    if (
+      this.event.request.intent.slots.buildingname.resolutions
+        .resolutionsPerAuthority[0].values[0].value.name
+    ) {
+      userbuildingname = this.event.request.intent.slots.buildingname.resolutions.resolutionsPerAuthority[0].values[0].value.name.toLowerCase();
+    } else {
+      var userbuildingname = this.event.request.intent.slots.buildingname.value.toLowerCase();
+    }
+
     if (userbuildingname) {
       speechOutput += userbuildingname + "'s hours ";
       var data = await getBuilding.getBuilding(userbuildingname);
