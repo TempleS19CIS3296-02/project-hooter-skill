@@ -8,7 +8,7 @@ const canvasToDoHandler = {
   CanvasToDoIntent: async function () {
     var speechOutput = "";
     var toDoResults = "";
-    var cardTitle = "Your Canvas To Do List:";
+    var cardTitle = "Your Canvas To Do List: ";
     var cardContent = "card content here";
     var imageObj = {
       smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
