@@ -29,7 +29,7 @@ const hoursLookUpHandler = {
       this.event.request.intent.slots.buildingname.resolutions
         .resolutionsPerAuthority[0].values[0].value.name
     ) {
-      userbuildingname = this.event.request.intent.slots.buildingname.resolutions.resolutionsPerAuthority[0].values[0].value.name.toLowerCase();
+      var userbuildingname = this.event.request.intent.slots.buildingname.resolutions.resolutionsPerAuthority[0].values[0].value.name.toLowerCase();
     } else {
       var userbuildingname = this.event.request.intent.slots.buildingname.value.toLowerCase();
     }
@@ -83,7 +83,7 @@ const hoursLookUpHandler = {
     } else {
       speechOutput = "Error. Please try again";
     } //else error
-    cardContent = speechOutput;
+    if (speechOutput) cardContent = speechOutput;
     this.emit(
       ":askWithCard",
       speechOutput,

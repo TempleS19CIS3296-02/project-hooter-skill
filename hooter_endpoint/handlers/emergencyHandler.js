@@ -16,7 +16,7 @@ const emergencyHandler = {
     this.emit(
       ":askWithCard",
       speechOutput,
-      reprompt,
+      REPROMPT,
       cardTitle,
       cardContent,
       imageObj
