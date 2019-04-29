@@ -18,7 +18,7 @@ exports.getToDo = function (AUTH_TOKEN, map) {
     }).then(function (response) {
       //handle success
       console.log("todo request success");
-      console.log(response.data);
+      // console.log(response.data);
       return buildTodoListSpeech(response.data, map);
     }));
   } catch (error) {
