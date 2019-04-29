@@ -14,7 +14,6 @@ const REPLACE_FT = " feet";
 const SEARCH_MI = " mi";
 const REPLACE_MI = " miles";
 const REPROMPT = "What can I help you with?";
-const CARD_TITLE = "Directions";
 const IMAGE_OBJ = {
     smallImageUrl: "https://i.imgur.com/0lpxVh6.png", //108x108
     largeImageUrl: "https://i.imgur.com/QIq2lcs.png" //240x240
@@ -49,6 +48,8 @@ function fixDirectionInstructionsGrammar(speechOutput){
     speechOutput = speechOutput.replaceAll("Turn", "turn");
     speechOutput = speechOutput.replaceAll(SEARCH_FT, REPLACE_FT);
     speechOutput = speechOutput.replaceAll(SEARCH_MI, REPLACE_MI);
+    speechOutput = speechOutput.replace(/&nbsp;/gi,'');
+    speechOutput = speechOutput.replace(/-/g," ").replace(/&/g,"");
     return speechOutput;
 }
 //Function to get directions steps from directions data retrieved from Google Directions API and format those instructions for fluent speech output
@@ -230,11 +231,12 @@ const directionsLookUpHandler = {
                 this.response.speak(speechOutput).listen(REPROMPT);
                 this.emit(":responseReady");
             } else {
-            //Send response for directions request
+                //Get response for directions request
                 speechOutput += collectAndFormatDirections(directionsData);
                 //Send a card with written directions to user Alexa app along with narration of directions
-                var cardContent = speechOutput;
-                this.emit(':askWithCard', speechOutput, REPROMPT, CARD_TITLE, cardContent, IMAGE_OBJ);
+                const cardTitle = "Directions to " + directionsData.routes[0].legs[0].end_address;
+                const cardContent = speechOutput;
+                this.emit(':askWithCard', speechOutput, REPROMPT, cardTitle, cardContent, IMAGE_OBJ);
             }
         }
     }
