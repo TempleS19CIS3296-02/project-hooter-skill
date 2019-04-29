@@ -49,7 +49,7 @@ Hooter has access to several different calendars. Hooter has access to the acade
 Hooter has access to the hours that each building is open and closed on each day of the week. You can ask Hooter if a building is open on a certain day or for the hours of a building.
 
 ## News Intent
-Hooter can get you headlines from Temple University's News. You can access them by saying "get me today's headlines" or "what's new in {newsType}". Different news types include: arts and culture, athletics, campus, research, students, sustainability, staff, community, and more. Hooter has lots of pride and only has delivers news related to Temple University. Go Owls!
+Hooter can get you headlines fresh from Temple University's News. You can access them by saying "get me today's headlines" or "what's new in {newsType}". Different news types include: arts and culture, athletics, campus, research, students, sustainability, staff, community, and more. Hooter has lots of pride and only delivers news related to Temple University. Go Owls!
 
 # Individual Contributions
 
