@@ -42,12 +42,12 @@ const hoursLookUpHandler = {
           var user_input_date = new Date(
             this.event.request.intent.slots.dateoftheweek.value
           );
-          userday = weekday[user_input_date.getDay()];
+          userday = weekday[user_input_date.getUTCDay()];
         } else {
           //if the user doesn't specify the day
           //Get the day for today
           var today = new Date();
-          var dayoftheweek = weekday[today.getDay()];
+          var dayoftheweek = weekday[today.getUTCDay()];
           userday = dayoftheweek;
         }
         //---------------------SLOT VALUES HANDLE ENDS----------------------------------------
