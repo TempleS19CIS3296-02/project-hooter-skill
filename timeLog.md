@@ -16,7 +16,7 @@
   - 6:00 Temple University News intent (Developing functionality, refactoring code and error handling)
   - 5:00 Testing
   - 1:00 Finalised version testing
-  - <30:00 Research and experimentation with different technologies and approaches
+  - <20:00 Research and experimentation with different technologies and approaches
 
 
 ### Sean Reddington
