@@ -7,6 +7,15 @@
   - 2:00 final demo and testing prep
   
 ### Viet Pham
+  - 4:00pm Initial research and initial experimentation
+  - 8:00pm building HoursLookUpIntent()
+  - 10:00pm testing intent
+  - 3:00pm adapting new project structure from Sean
+  - 4:00pm creating getBuilding()
+  - 5:00pm building eventLookUpIntent()
+  - 9:00pm testing intent
+  - 11am adding card response
+  - 1:00am finalization
 
 
 ### Myra Mirza
