@@ -40,7 +40,7 @@ Hooter can be used as a GPS! He can give you specific step by step instructions 
 You can ask Hooter, "how far is {building} from me" or "how many minutes away is {building} from me. Hooter will respond with the minutes away a building is from your location or another location.
 
 ## Canvas To Do Intent
-Hooter has the capability to retrieve the user's "to do list" from their Canvas account (https://www.canvaslms.com/) and read it out to the user, listing the assignments that are due. _HOWEVER_ Temple University's policy prevents access to a user's Canvas account without the use of third party authentication, which we are unable to get permission to do. This intent will be disabled in the public version of Hooter skill.
+Hooter has the capability to retrieve the user's "to do list" from their Canvas account (https://www.canvaslms.com/) and read it out to the user, listing the assignments that are due. __However__, Temple University's policy prevents access to a user's Canvas account without the use of third party authentication, which we are unable to get permission to do. This intent will be disabled in the public version of Hooter skill.
 
 ## Event Lookup Intent
 Hooter has access to several different calendars. Hooter has access to the academic calendar, the Temple athletics calendar, and the Phillies and Eagles' calendars. You can ask Hooter something like "what are the upcoming events" or "events on {day}". Hooter will respond with 1-5 events and when they are occurring and how many days are remaining until the event. 
