@@ -54,6 +54,7 @@ Hooter has access to Temple News Headlines. You can access them by saying "what 
 # Individual Contributions
 
 ## Viet Pham
+I spent most of the time working on Events Lookup and Temple Buildings Hours Lookup Intents. In order to start working on these two intents, I had to do research on how to use Alexa SDK, Node.js, DynamoDB, and AWS Lambda. I also learned how to use API Gateway to create a REST API that can access the database and return the proper building's information. This step is very beneficial since we do not need to use complicated syntax to access the database but make an API call within the code. Plus, other intents of Myra Mirza also get the benefit from the API when she uses it to retrieve the building's address. Besides developing intents, I also did a lot of testing to look for unknown errors that we did not expect.  
 
 ## Myra Mirza
 
