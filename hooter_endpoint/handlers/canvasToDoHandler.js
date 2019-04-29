@@ -2,6 +2,7 @@
 const getAccessToken = require("../canvasUtils/getAccessToken.js");
 const getToDo = require("../canvasUtils/getToDo.js");
 const getCourses = require("../canvasUtils/getCourses.js");
+const reprompt = "What can I help you with?";
 
 // obtains a to do list from Canvas LMS API and outs as Alexa response
 const canvasToDoHandler = {
@@ -51,7 +52,7 @@ const canvasToDoHandler = {
     // Output speech formatted to do list with card
     cardContent = toDoResults;
     speechOutput = cardTitle + toDoResults;
-    this.emit(":tellWithCard", speechOutput, cardTitle, cardContent, imageObj);
+    this.emit(":askWithCard", speechOutput, reprompt, cardTitle, cardContent, imageObj);
     this.emit(":responseReady");
     // console.log(speechOutput);
   } //end CanvasToDoIntent()

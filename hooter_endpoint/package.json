@@ -14,8 +14,11 @@
     "i18next-sprintf-postprocessor": "^0.2.2",
     "jQuery": "^1.7.4",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.25",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request-promise": "^4.2.4",
+    "rss-parser": "^3.7.0",
+    "ssml-builder": "^0.4.3"
   },
   "devDependencies": {},
   "scripts": {

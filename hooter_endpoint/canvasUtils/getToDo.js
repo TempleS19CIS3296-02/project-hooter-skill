@@ -5,7 +5,7 @@
 */
 
 const axios = require("axios");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 exports.getToDo = function (AUTH_TOKEN, map) {
   let response = ""; //http response
@@ -50,7 +50,8 @@ function buildTodoListSpeech(toDoList, map) {
 function getToDoListItem(item, course_name) {
   let dueDate = item.assignment.due_at;
   let assignment = item.assignment.name;
-  dueDate = moment(item.assignment.due_at).local().format("MMMM Do [at] hh:mm A");
+  dueDate = moment(item.assignment.due_at).tz('America/New_York').format("MMMM Do [at] hh:mm A");
+
 
   //format for Alexa output
   var str = course_name + ": " + assignment + " due date: " + dueDate + ". ";

@@ -9,7 +9,7 @@ var imageObj = {
 };
 
 const hoursLookUpHandler = {
-  HoursLookUpIntent: async function() {
+  HoursLookUpIntent: async function () {
     var speechOutput = "";
     var userday = "";
     var weekday = [
