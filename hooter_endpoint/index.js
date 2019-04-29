@@ -18,10 +18,11 @@ const eventsLookUpHandler = require("./handlers/eventsLookUpHandler.js");
 const canvasToDoHandler = require("./handlers/canvasToDoHandler.js");
 const directionsLookUpHandler = require("./handlers/directionsLookUpHandler.js");
 const tuHeadlinesHandler = require("./handlers/tuHeadlinesHandler.js");
+const emergencyHandler = require("./handlers/emergencyHandler.js");
 
 canvasToDoHandler.CanvasToDoIntent();
 
-exports.handler = function (event, context, callback) {
+exports.handler = function(event, context, callback) {
   const alexa = Alexa.handler(event, context, callback);
   alexa.APP_ID = APP_ID;
   alexa.registerHandlers(
@@ -31,7 +32,8 @@ exports.handler = function (event, context, callback) {
     eventsLookUpHandler,
     canvasToDoHandler,
     directionsLookUpHandler,
-    tuHeadlinesHandler
+    tuHeadlinesHandler,
+    emergencyHandler
   );
   alexa.execute();
 };

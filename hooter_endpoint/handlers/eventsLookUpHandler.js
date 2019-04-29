@@ -89,6 +89,7 @@ const eventsLookUpHandler = {
           cardContent,
           imageObj
         );
+        this.emit(":responseReady");
       }
     );
   }
