@@ -10,6 +10,13 @@
 
 
 ### Myra Mirza
+  - 4:00 Initial research and initial experimentation
+  - 8:00 Distance intent (Developing functionality, refactoring code and error handling)
+  - 10:00 Directions intent (Developing functionality, refactoring code and error handling)
+  - 6:00 Temple University News intent (Developing functionality, refactoring code and error handling)
+  - 5:00 Testing
+  - 1:00 Finalised version testing
+  - <30:00 Research and experimentation with different technologies and approaches
 
 
 ### Sean Reddington
