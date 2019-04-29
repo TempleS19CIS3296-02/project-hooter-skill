@@ -18,6 +18,8 @@
   - 2:00 Integrating getToDoList() with Alexa skill intent/handlers
   - 1:00 Canvas intent debugging
   - 1:00 created new icons
+  - 1:00 error handling and adding card
+  - 1:00 finalization
 
 ### Richard Kemmerer
   - 2:00 on building information and JSON/DynamoDB code & utterances
