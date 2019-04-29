@@ -53,6 +53,7 @@ const canvasToDoHandler = {
     speechOutput = cardTitle + toDoResults;
     this.emit(":tellWithCard", speechOutput, cardTitle, cardContent, imageObj);
     this.emit(":responseReady");
+    // console.log(speechOutput);
   } //end CanvasToDoIntent()
 }; // end canvasToDoHandler
 
